@@ -1,0 +1,23 @@
+<mat-card class="login-card">
+    <mat-card-header>
+        <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-form-field >
+            <mat-label>Phone</mat-label>
+            <input matInput [(ngModel)]="UserName">
+            <mat-icon matSuffix>phone</mat-icon>
+            <mat-hint>Include area code</mat-hint>
+        </mat-form-field>
+        <mat-form-field >
+            <mat-label>Password</mat-label>
+            <input matInput [(ngModel)]="Password">
+            <mat-icon matSuffix>password</mat-icon>
+        </mat-form-field>
+        <button class="animation-button" (click)="login()" mat-fab color="accent">
+            <mat-icon>double_arrow</mat-icon>
+        </button>
+        <p></p>
+        <mat-progress-bar *ngIf="loggingIn" color="accent" mode="indeterminate"></mat-progress-bar>
+    </mat-card-content>
+</mat-card>
