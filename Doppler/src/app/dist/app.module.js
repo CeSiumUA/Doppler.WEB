@@ -23,6 +23,7 @@ var button_1 = require("@angular/material/button");
 var progress_bar_1 = require("@angular/material/progress-bar");
 var http_1 = require("@angular/common/http");
 var forms_1 = require("@angular/forms");
+var app_routing_module_1 = require("./app-routing.module");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -45,6 +46,7 @@ var AppModule = /** @class */ (function () {
                 http_1.HttpClientModule,
                 service_worker_1.ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment_1.environment.production }),
                 animations_1.BrowserAnimationsModule,
+                app_routing_module_1.AppRoutingModule
             ],
             providers: [],
             bootstrap: [app_component_1.AppComponent]

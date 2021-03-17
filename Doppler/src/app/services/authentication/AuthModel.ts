@@ -1,7 +1,7 @@
 import { User } from './User';
 import { JwtToken } from './JwtToken';
-export class AuthModel{
-    public user: User;
-    public accessToken: JwtToken;
-    public refreshToken: JwtToken;
+export interface AuthModel{
+    user: User;
+    accessToken: JwtToken;
+    refreshToken: JwtToken;
 }

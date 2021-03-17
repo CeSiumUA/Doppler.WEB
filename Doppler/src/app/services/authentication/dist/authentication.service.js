@@ -9,17 +9,22 @@ exports.__esModule = true;
 exports.AuthenticationService = void 0;
 var core_1 = require("@angular/core");
 var UrlResolver_1 = require("../../../environments/UrlResolver");
+var static_repository_1 = require("../../../repository/static.repository");
 var AuthenticationService = /** @class */ (function () {
     function AuthenticationService(http) {
         this.http = http;
+        this.staticRepository = new static_repository_1.StaticRepository();
     }
     AuthenticationService.prototype.login = function (UserName, Password) {
+        var _this = this;
         if (UserName && Password) {
             this.http.post(UrlResolver_1.UrlResolver.GetLoginUrl(), {
-                "UserName": UserName,
-                "Password": Password
+                'UserName': UserName,
+                'Password': Password
             }).subscribe(function (authResult) {
-                console.log(authResult);
+                if (authResult) {
+                    _this.staticRepository.saveLoginData(authResult);
+                }
             });
         }
     };
