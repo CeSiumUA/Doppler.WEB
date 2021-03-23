@@ -5,6 +5,8 @@ import { User } from './User';
 import { UrlResolver } from '../../../environments/UrlResolver';
 import { IStaticRepository, StaticRepository } from '../../../repository/static.repository';
 import { AuthModel } from './AuthModel';
+import { map } from 'rxjs/operators';
+import { from, Observable, of, throwError } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -14,16 +16,33 @@ export class AuthenticationService {
     constructor(private http: HttpClient){
 
     }
-    public login(UserName: string, Password: string): void{
-        if(UserName && Password){
-            this.http.post(UrlResolver.GetLoginUrl(), {
+    public login(UserName: string, Password: string): Observable<object|string>{
+        if (UserName && Password){
+            return this.http.post(UrlResolver.GetLoginUrl(), {
                 'UserName': UserName,
                 'Password': Password
-            }).subscribe(authResult => {
-                if(authResult){
+            }).pipe(map(authResult => {
+                if (authResult){
                     this.staticRepository.saveLoginData(authResult as AuthModel);
                 }
-            });
+                else{
+                    throw new Error('invalidCredentials');
+                }
+                return authResult;
+            }));
         }
+        return of('Credentials are empty!').pipe(map(x => {
+            throw new Error('Credentials are empty!');
+        }));
+    }
+    public checkAuth(): boolean{
+        const authModel = this.getAuthModel();
+        if (authModel){
+            return true;
+        }
+        return false;
+    }
+    private getAuthModel(): AuthModel | null{
+        return this.staticRepository.getLoginData();
     }
 }

@@ -10,6 +10,8 @@ exports.AuthenticationService = void 0;
 var core_1 = require("@angular/core");
 var UrlResolver_1 = require("../../../environments/UrlResolver");
 var static_repository_1 = require("../../../repository/static.repository");
+var operators_1 = require("rxjs/operators");
+var rxjs_1 = require("rxjs");
 var AuthenticationService = /** @class */ (function () {
     function AuthenticationService(http) {
         this.http = http;
@@ -18,15 +20,32 @@ var AuthenticationService = /** @class */ (function () {
     AuthenticationService.prototype.login = function (UserName, Password) {
         var _this = this;
         if (UserName && Password) {
-            this.http.post(UrlResolver_1.UrlResolver.GetLoginUrl(), {
+            return this.http.post(UrlResolver_1.UrlResolver.GetLoginUrl(), {
                 'UserName': UserName,
                 'Password': Password
-            }).subscribe(function (authResult) {
+            }).pipe(operators_1.map(function (authResult) {
                 if (authResult) {
                     _this.staticRepository.saveLoginData(authResult);
                 }
-            });
+                else {
+                    throw new Error('invalidCredentials');
+                }
+                return authResult;
+            }));
         }
+        return rxjs_1.of('Credentials are empty!').pipe(operators_1.map(function (x) {
+            throw new Error('Credentials are empty!');
+        }));
+    };
+    AuthenticationService.prototype.checkAuth = function () {
+        var authModel = this.getAuthModel();
+        if (authModel) {
+            return true;
+        }
+        return false;
+    };
+    AuthenticationService.prototype.getAuthModel = function () {
+        return this.staticRepository.getLoginData();
     };
     AuthenticationService = __decorate([
         core_1.Injectable({

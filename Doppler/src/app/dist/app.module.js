@@ -13,17 +13,11 @@ var app_component_1 = require("./app.component");
 var service_worker_1 = require("@angular/service-worker");
 var environment_1 = require("../environments/environment");
 var animations_1 = require("@angular/platform-browser/animations");
-var toolbar_1 = require("@angular/material/toolbar");
 var login_component_1 = require("./login/login.component");
-var card_1 = require("@angular/material/card");
-var form_field_1 = require("@angular/material/form-field");
-var input_1 = require("@angular/material/input");
-var icon_1 = require("@angular/material/icon");
-var button_1 = require("@angular/material/button");
-var progress_bar_1 = require("@angular/material/progress-bar");
 var http_1 = require("@angular/common/http");
 var forms_1 = require("@angular/forms");
 var app_routing_module_1 = require("./app-routing.module");
+var appmaterial_module_1 = require("../appmaterial.module");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -35,14 +29,8 @@ var AppModule = /** @class */ (function () {
             ],
             imports: [
                 platform_browser_1.BrowserModule,
-                toolbar_1.MatToolbarModule,
-                card_1.MatCardModule,
                 forms_1.FormsModule,
-                form_field_1.MatFormFieldModule,
-                input_1.MatInputModule,
-                icon_1.MatIconModule,
-                button_1.MatButtonModule,
-                progress_bar_1.MatProgressBarModule,
+                appmaterial_module_1.AppMaterialModule,
                 http_1.HttpClientModule,
                 service_worker_1.ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment_1.environment.production }),
                 animations_1.BrowserAnimationsModule,
