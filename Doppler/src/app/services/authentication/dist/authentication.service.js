@@ -47,6 +47,30 @@ var AuthenticationService = /** @class */ (function () {
     AuthenticationService.prototype.getAuthModel = function () {
         return this.staticRepository.getLoginData();
     };
+    Object.defineProperty(AuthenticationService.prototype, "userName", {
+        get: function () {
+            var _a;
+            return (_a = this.getAuthModel()) === null || _a === void 0 ? void 0 : _a.user.name;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(AuthenticationService.prototype, "phoneNumber", {
+        get: function () {
+            var _a;
+            return (_a = this.getAuthModel()) === null || _a === void 0 ? void 0 : _a.user.phoneNumber;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(AuthenticationService.prototype, "profilePicture", {
+        get: function () {
+            var _a;
+            return (_a = this.getAuthModel()) === null || _a === void 0 ? void 0 : _a.user.iconUrl;
+        },
+        enumerable: false,
+        configurable: true
+    });
     AuthenticationService = __decorate([
         core_1.Injectable({
             providedIn: 'root'

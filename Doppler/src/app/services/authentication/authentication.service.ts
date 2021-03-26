@@ -45,4 +45,13 @@ export class AuthenticationService {
     private getAuthModel(): AuthModel | null{
         return this.staticRepository.getLoginData();
     }
+    public get userName(): string | undefined {
+        return this.getAuthModel()?.user.name;
+    }
+    public get phoneNumber(): string | undefined {
+        return this.getAuthModel()?.user.phoneNumber;
+    }
+    public get profilePicture(): string | undefined {
+        return this.getAuthModel()?.user.iconUrl;
+    }
 }

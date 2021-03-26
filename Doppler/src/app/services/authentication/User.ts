@@ -3,4 +3,5 @@ export interface User {
     email: string;
     phoneNumber: string;
     login: string;
+    iconUrl: string;
 }

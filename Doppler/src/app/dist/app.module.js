@@ -18,6 +18,8 @@ var http_1 = require("@angular/common/http");
 var forms_1 = require("@angular/forms");
 var app_routing_module_1 = require("./app-routing.module");
 var appmaterial_module_1 = require("../appmaterial.module");
+var home_component_1 = require("./home/home.component");
+var toolbar_component_1 = require("./toolbar/toolbar.component");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -25,7 +27,9 @@ var AppModule = /** @class */ (function () {
         core_1.NgModule({
             declarations: [
                 app_component_1.AppComponent,
-                login_component_1.LoginComponent
+                login_component_1.LoginComponent,
+                home_component_1.HomeComponent,
+                toolbar_component_1.ToolbarComponent
             ],
             imports: [
                 platform_browser_1.BrowserModule,

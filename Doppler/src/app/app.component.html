@@ -1,19 +1,39 @@
-<div class="app-container">
-    <mat-toolbar>
+<!-- <div class="app-container">
+    <mat-toolbar class="app-toolbar">
         <button mat-icon-button (click)="snav.toggle()">
             <mat-icon>menu</mat-icon>
-        </button>
+        </button> 
         <h1 (click)="goHome">{{title}}</h1>
     </mat-toolbar>
-    <mat-sidenav-container>
+    <mat-sidenav-container class="app-sidenav-container">
         <mat-sidenav #snav class="side-nav-container">
-        <mat-nav-list>
-            <a>Test</a>
-        </mat-nav-list>
+            <mat-nav-list>
+                <a>Test</a>
+            </mat-nav-list>
         </mat-sidenav>
 
         <mat-sidenav-content class="side-nav-content">
             <router-outlet></router-outlet>
         </mat-sidenav-content>
     </mat-sidenav-container>
-</div>
+</div> -->
+
+<div class="app-container" [class.app-is-mobile]="mobileQuery.matches">
+    <mat-toolbar class="app-toolbar">
+      <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+      <h1>{{title}}</h1>
+    </mat-toolbar>
+  
+    <mat-sidenav-container class="app-sidenav-container"
+                           [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+      <mat-sidenav class="side-nav-container" #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+                   [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+        <mat-nav-list>
+            <app-toolbar></app-toolbar>
+        </mat-nav-list>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <router-outlet></router-outlet>>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>

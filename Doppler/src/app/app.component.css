@@ -1,11 +1,35 @@
 
 .side-nav-container {
-    width: 50%;
+    width: auto;
     height: auto;
 }
 .side-nav-content {
-    display: flex;
+   /*  display: flex;
     height: auto;
-    /* align-items: center;
+    align-items: center;
     justify-content: center; */
 }
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  .app-is-mobile .app-toolbar {
+    position: fixed;
+    z-index: 2;
+  }
+  
+  .app-sidenav-container {
+    flex: 1;
+  }
+  
+  .app-is-mobile .app-sidenav-container {
+    flex: 1 0 auto;
+  }
+  
