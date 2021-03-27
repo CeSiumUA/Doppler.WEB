@@ -44,6 +44,9 @@ var AuthenticationService = /** @class */ (function () {
         }
         return false;
     };
+    AuthenticationService.prototype.logout = function () {
+        this.staticRepository.clearLoginData();
+    };
     AuthenticationService.prototype.getAuthModel = function () {
         return this.staticRepository.getLoginData();
     };

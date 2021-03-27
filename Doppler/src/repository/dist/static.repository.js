@@ -16,6 +16,10 @@ var StaticRepository = /** @class */ (function () {
         var authModel = JSON.parse(json);
         return authModel;
     };
+    StaticRepository.prototype.clearLoginData = function () {
+        localStorage.removeItem('authData');
+        location.reload();
+    };
     return StaticRepository;
 }());
 exports.StaticRepository = StaticRepository;

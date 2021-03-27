@@ -42,6 +42,9 @@ export class AuthenticationService {
         }
         return false;
     }
+    public logout(): void{
+        this.staticRepository.clearLoginData();
+    }
     private getAuthModel(): AuthModel | null{
         return this.staticRepository.getLoginData();
     }

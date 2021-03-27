@@ -19,4 +19,7 @@ export class ToolbarComponent{
     constructor(private authService: AuthenticationService){
 
     }
+    public clearLoginData(): void{
+        this.authService.logout();
+    }
 }

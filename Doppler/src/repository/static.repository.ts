@@ -3,6 +3,7 @@ import { AuthModel } from '../app/services/authentication/AuthModel';
 export interface IStaticRepository{
     saveLoginData(authModel: AuthModel): void;
     getLoginData(): AuthModel | null;
+    clearLoginData(): void;
 }
 
 export class StaticRepository implements IStaticRepository{
@@ -18,5 +19,9 @@ export class StaticRepository implements IStaticRepository{
         }
         let authModel: AuthModel = JSON.parse(json as string);
         return authModel;
+    }
+    public clearLoginData(): void{
+        localStorage.removeItem('authData');
+        location.reload();
     }
 }

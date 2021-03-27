@@ -33,6 +33,9 @@ var ToolbarComponent = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    ToolbarComponent.prototype.clearLoginData = function () {
+        this.authService.logout();
+    };
     ToolbarComponent = __decorate([
         core_1.Component({
             selector: 'app-toolbar',
