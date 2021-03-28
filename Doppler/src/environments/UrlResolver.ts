@@ -11,7 +11,7 @@ export class UrlResolver{
         if(imageValue){
             return `${environment.apiUrl}/cdn/files/${imageValue}`
         }
-        return `assets/icons/defaults/${imageType.toString()}`;
+        return `assets/icons/default/${imageType.toString()}`;
     }
     /* public static GetUser(guid: string): Observable<Contact>{
         const httpUserRequest = `${environment.apiUrl}/api/`

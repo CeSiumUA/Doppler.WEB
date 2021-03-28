@@ -42,7 +42,9 @@ var ToolbarComponent = /** @class */ (function () {
         this.authService.logout();
     };
     ToolbarComponent.prototype.showProfile = function () {
-        this.dialog.open(profileModalBox_component_1.ProfileModalBoxComponent, {});
+        this.dialog.open(profileModalBox_component_1.ProfileModalBoxComponent, {
+            data: this.authService.loginName
+        });
     };
     ToolbarComponent = __decorate([
         core_1.Component({

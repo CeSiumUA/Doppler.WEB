@@ -29,7 +29,7 @@ export class ToolbarComponent{
     }
     public showProfile(): void{
         this.dialog.open(ProfileModalBoxComponent, {
-            
+            data: this.authService.loginName,
         });
     }
 }

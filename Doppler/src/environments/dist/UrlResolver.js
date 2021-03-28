@@ -12,7 +12,7 @@ var UrlResolver = /** @class */ (function () {
         if (imageValue) {
             return environment_1.environment.apiUrl + "/cdn/files/" + imageValue;
         }
-        return "assets/icons/defaults/" + imageType.toString();
+        return "assets/icons/default/" + imageType.toString();
     };
     return UrlResolver;
 }());

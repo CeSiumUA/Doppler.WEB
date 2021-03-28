@@ -85,6 +85,14 @@ var AuthenticationService = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(AuthenticationService.prototype, "loginName", {
+        get: function () {
+            var _a;
+            return (_a = this.getAuthModel()) === null || _a === void 0 ? void 0 : _a.user.login;
+        },
+        enumerable: false,
+        configurable: true
+    });
     AuthenticationService = __decorate([
         core_1.Injectable({
             providedIn: 'root'

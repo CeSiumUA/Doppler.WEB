@@ -62,4 +62,7 @@ export class AuthenticationService {
         if(token) return token;
         return '';
     }
+    public get loginName(): string | undefined{
+        return this.getAuthModel()?.user.login;
+    }
 }
