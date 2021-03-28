@@ -1,7 +1,5 @@
-export interface User {
-    name: string;
+import { Contact } from "src/models/contact";
+
+export interface User extends Contact {
     email: string;
-    phoneNumber: string;
-    login: string;
-    iconUrl: string;
 }

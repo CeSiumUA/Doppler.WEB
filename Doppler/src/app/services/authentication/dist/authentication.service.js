@@ -74,6 +74,17 @@ var AuthenticationService = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(AuthenticationService.prototype, "accessToken", {
+        get: function () {
+            var _a;
+            var token = (_a = this.getAuthModel()) === null || _a === void 0 ? void 0 : _a.accessToken.token;
+            if (token)
+                return token;
+            return '';
+        },
+        enumerable: false,
+        configurable: true
+    });
     AuthenticationService = __decorate([
         core_1.Injectable({
             providedIn: 'root'

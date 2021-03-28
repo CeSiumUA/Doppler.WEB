@@ -12,13 +12,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppMaterialModule } from '../appmaterial.module';
 import { HomeComponent } from './home/home.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { ProfileModalBoxComponent } from './profile/profile_modal_box/profileModalBox.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    ProfileModalBoxComponent,
   ],
   imports: [
     BrowserModule,

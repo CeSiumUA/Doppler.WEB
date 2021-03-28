@@ -8,9 +8,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 exports.__esModule = true;
 exports.ToolbarComponent = void 0;
 var core_1 = require("@angular/core");
+var UrlResolver_1 = require("../../environments/UrlResolver");
+var enums_helper_1 = require("src/environments/enums.helper");
+var profileModalBox_component_1 = require("../profile/profile_modal_box/profileModalBox.component");
 var ToolbarComponent = /** @class */ (function () {
-    function ToolbarComponent(authService) {
+    function ToolbarComponent(authService, dialog) {
         this.authService = authService;
+        this.dialog = dialog;
     }
     Object.defineProperty(ToolbarComponent.prototype, "userName", {
         get: function () {
@@ -28,13 +32,17 @@ var ToolbarComponent = /** @class */ (function () {
     });
     Object.defineProperty(ToolbarComponent.prototype, "iconUrl", {
         get: function () {
-            return (this.authService.profilePicture) ? this.authService.profilePicture : 'assets/icons/profile_picture.png';
+            var imageGuid = this.authService.profilePicture;
+            return UrlResolver_1.UrlResolver.GeImageUrl(imageGuid, enums_helper_1.DefaultImageType.ProfilePictire);
         },
         enumerable: false,
         configurable: true
     });
     ToolbarComponent.prototype.clearLoginData = function () {
         this.authService.logout();
+    };
+    ToolbarComponent.prototype.showProfile = function () {
+        this.dialog.open(profileModalBox_component_1.ProfileModalBoxComponent, {});
     };
     ToolbarComponent = __decorate([
         core_1.Component({

@@ -20,6 +20,7 @@ var app_routing_module_1 = require("./app-routing.module");
 var appmaterial_module_1 = require("../appmaterial.module");
 var home_component_1 = require("./home/home.component");
 var toolbar_component_1 = require("./toolbar/toolbar.component");
+var profileModalBox_component_1 = require("./profile/profile_modal_box/profileModalBox.component");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -29,7 +30,8 @@ var AppModule = /** @class */ (function () {
                 app_component_1.AppComponent,
                 login_component_1.LoginComponent,
                 home_component_1.HomeComponent,
-                toolbar_component_1.ToolbarComponent
+                toolbar_component_1.ToolbarComponent,
+                profileModalBox_component_1.ProfileModalBoxComponent,
             ],
             imports: [
                 platform_browser_1.BrowserModule,

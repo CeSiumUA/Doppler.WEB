@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from '../services/authentication/authentication.service';
+import { UrlResolver } from '../../environments/UrlResolver';
+import { DefaultImageType } from 'src/environments/enums.helper';
+import { MatDialog } from '@angular/material/dialog';
+import { ProfileModalBoxComponent } from '../profile/profile_modal_box/profileModalBox.component';
 
 @Component({
     selector: 'app-toolbar',
@@ -14,12 +18,18 @@ export class ToolbarComponent{
         return this.authService.phoneNumber;
     }
     public get iconUrl(): string{
-        return (this.authService.profilePicture) ? this.authService.profilePicture : 'assets/icons/profile_picture.png';
+        let imageGuid = this.authService.profilePicture;
+        return UrlResolver.GeImageUrl(imageGuid, DefaultImageType.ProfilePictire);
     }
-    constructor(private authService: AuthenticationService){
+    constructor(private authService: AuthenticationService, private dialog: MatDialog){
 
     }
     public clearLoginData(): void{
         this.authService.logout();
+    }
+    public showProfile(): void{
+        this.dialog.open(ProfileModalBoxComponent, {
+            
+        });
     }
 }

@@ -57,4 +57,9 @@ export class AuthenticationService {
     public get profilePicture(): string | undefined {
         return this.getAuthModel()?.user.iconUrl;
     }
+    public get accessToken(): string {
+        let token = this.getAuthModel()?.accessToken.token;
+        if(token) return token;
+        return '';
+    }
 }
