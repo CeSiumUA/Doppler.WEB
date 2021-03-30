@@ -12,9 +12,11 @@ var router_1 = require("@angular/router");
 var login_component_1 = require("./login/login.component");
 var home_component_1 = require("./home/home.component");
 var auth_guard_1 = require("./services/authentication/auth.guard");
+var contacts_component_1 = require("./contacts/contacts.component");
 var routes = [
     { path: '', component: home_component_1.HomeComponent, canActivate: [auth_guard_1.AuthGuard] },
     { path: 'login', component: login_component_1.LoginComponent },
+    { path: 'contacts', component: contacts_component_1.ContactsComponent, canActivate: [auth_guard_1.AuthGuard] },
     { path: '**', component: home_component_1.HomeComponent, canActivate: [auth_guard_1.AuthGuard] },
 ];
 var AppRoutingModule = /** @class */ (function () {

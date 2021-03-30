@@ -18,6 +18,7 @@ var ProfileModalBoxComponent = /** @class */ (function () {
     function ProfileModalBoxComponent(profileUrl, hubService) {
         this.profileUrl = profileUrl;
         this.hubService = hubService;
+        //TODO Auth Check
         this.name = '';
         this.phoneNumber = '';
         this.description = '';

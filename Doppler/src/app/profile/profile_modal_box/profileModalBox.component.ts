@@ -10,6 +10,7 @@ import { DefaultImageType } from "src/environments/enums.helper";
     styleUrls: ['./profileModalBox.component.css']
 })
 export class ProfileModalBoxComponent implements OnInit{
+    //TODO Auth Check
     public name: string = '';
     public phoneNumber: string = '';
     public description: string = '';

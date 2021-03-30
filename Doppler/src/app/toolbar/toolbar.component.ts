@@ -4,6 +4,7 @@ import { UrlResolver } from '../../environments/UrlResolver';
 import { DefaultImageType } from 'src/environments/enums.helper';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileModalBoxComponent } from '../profile/profile_modal_box/profileModalBox.component';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-toolbar',
@@ -21,7 +22,7 @@ export class ToolbarComponent{
         let imageGuid = this.authService.profilePicture;
         return UrlResolver.GeImageUrl(imageGuid, DefaultImageType.ProfilePictire);
     }
-    constructor(private authService: AuthenticationService, private dialog: MatDialog){
+    constructor(private authService: AuthenticationService, private dialog: MatDialog, private router: Router){
 
     }
     public clearLoginData(): void{
@@ -31,5 +32,8 @@ export class ToolbarComponent{
         this.dialog.open(ProfileModalBoxComponent, {
             data: this.authService.loginName,
         });
+    }
+    public goToContacts(): void{
+        this.router.navigateByUrl('/contacts');
     }
 }

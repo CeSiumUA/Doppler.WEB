@@ -13,6 +13,7 @@ import { AppMaterialModule } from '../appmaterial.module';
 import { HomeComponent } from './home/home.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { ProfileModalBoxComponent } from './profile/profile_modal_box/profileModalBox.component';
+import { ContactsComponent } from './contacts/contacts.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ProfileModalBoxComponent } from './profile/profile_modal_box/profileMod
     HomeComponent,
     ToolbarComponent,
     ProfileModalBoxComponent,
+    ContactsComponent
   ],
   imports: [
     BrowserModule,

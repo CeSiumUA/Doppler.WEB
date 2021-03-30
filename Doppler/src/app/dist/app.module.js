@@ -21,6 +21,7 @@ var appmaterial_module_1 = require("../appmaterial.module");
 var home_component_1 = require("./home/home.component");
 var toolbar_component_1 = require("./toolbar/toolbar.component");
 var profileModalBox_component_1 = require("./profile/profile_modal_box/profileModalBox.component");
+var contacts_component_1 = require("./contacts/contacts.component");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -32,6 +33,7 @@ var AppModule = /** @class */ (function () {
                 home_component_1.HomeComponent,
                 toolbar_component_1.ToolbarComponent,
                 profileModalBox_component_1.ProfileModalBoxComponent,
+                contacts_component_1.ContactsComponent
             ],
             imports: [
                 platform_browser_1.BrowserModule,

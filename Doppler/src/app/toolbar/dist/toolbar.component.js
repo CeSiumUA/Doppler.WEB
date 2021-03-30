@@ -12,9 +12,10 @@ var UrlResolver_1 = require("../../environments/UrlResolver");
 var enums_helper_1 = require("src/environments/enums.helper");
 var profileModalBox_component_1 = require("../profile/profile_modal_box/profileModalBox.component");
 var ToolbarComponent = /** @class */ (function () {
-    function ToolbarComponent(authService, dialog) {
+    function ToolbarComponent(authService, dialog, router) {
         this.authService = authService;
         this.dialog = dialog;
+        this.router = router;
     }
     Object.defineProperty(ToolbarComponent.prototype, "userName", {
         get: function () {
@@ -45,6 +46,9 @@ var ToolbarComponent = /** @class */ (function () {
         this.dialog.open(profileModalBox_component_1.ProfileModalBoxComponent, {
             data: this.authService.loginName
         });
+    };
+    ToolbarComponent.prototype.goToContacts = function () {
+        this.router.navigateByUrl('/contacts');
     };
     ToolbarComponent = __decorate([
         core_1.Component({
