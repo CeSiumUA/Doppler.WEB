@@ -23,7 +23,6 @@ var ProfileModalBoxComponent = /** @class */ (function () {
         this.description = '';
         this.imageUrl = '';
         this.loading = false;
-        this.loading = true;
     }
     Object.defineProperty(ProfileModalBoxComponent.prototype, "image", {
         get: function () {
@@ -41,6 +40,7 @@ var ProfileModalBoxComponent = /** @class */ (function () {
     });
     ProfileModalBoxComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.loading = true;
         this.hubService.getContact(this.profileUrl)
             .then(function (response) {
             _this.name = response.name,

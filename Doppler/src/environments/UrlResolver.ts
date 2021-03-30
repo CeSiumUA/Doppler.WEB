@@ -13,6 +13,9 @@ export class UrlResolver{
         }
         return `assets/icons/default/${imageType.toString()}`;
     }
+    public static GetRefreshTokenUrl(): string{
+        return `${environment.apiUrl}/api/authentication/recoveraccess`;
+    }
     /* public static GetUser(guid: string): Observable<Contact>{
         const httpUserRequest = `${environment.apiUrl}/api/`
     } */

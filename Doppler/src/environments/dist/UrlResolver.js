@@ -14,6 +14,9 @@ var UrlResolver = /** @class */ (function () {
         }
         return "assets/icons/default/" + imageType.toString();
     };
+    UrlResolver.GetRefreshTokenUrl = function () {
+        return environment_1.environment.apiUrl + "/api/authentication/recoveraccess";
+    };
     return UrlResolver;
 }());
 exports.UrlResolver = UrlResolver;

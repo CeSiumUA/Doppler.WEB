@@ -12,7 +12,7 @@ export class HubService{
     constructor(private authService : AuthenticationService){
         this.connection = new signalR.HubConnectionBuilder()
                             .withUrl(`${environment.apiUrl}/socialHub`, {
-                                accessTokenFactory: () => this.authService.accessToken
+                                accessTokenFactory: async () => await this.authService.getAccessToken()
                             })
                             .build();
     }
@@ -20,8 +20,8 @@ export class HubService{
         await this.startConnection();
         return await this.connection.invoke('GetUser', login);
     }
-    private async startConnection(): Promise<void>{
-        if(this.connection.state !== signalR.HubConnectionState.Connected){
+    public async startConnection(): Promise<void>{
+        if(this.connection.state === signalR.HubConnectionState.Disconnected){
             return await this.connection.start();
         }
     }

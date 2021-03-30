@@ -52,7 +52,12 @@ var HubService = /** @class */ (function () {
         this.authService = authService;
         this.connection = new signalR.HubConnectionBuilder()
             .withUrl(environment_1.environment.apiUrl + "/socialHub", {
-            accessTokenFactory: function () { return _this.authService.accessToken; }
+            accessTokenFactory: function () { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.authService.getAccessToken()];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            }); }); }
         })
             .build();
     }
@@ -74,7 +79,7 @@ var HubService = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (!(this.connection.state !== signalR.HubConnectionState.Connected)) return [3 /*break*/, 2];
+                        if (!(this.connection.state === signalR.HubConnectionState.Disconnected)) return [3 /*break*/, 2];
                         return [4 /*yield*/, this.connection.start()];
                     case 1: return [2 /*return*/, _a.sent()];
                     case 2: return [2 /*return*/];

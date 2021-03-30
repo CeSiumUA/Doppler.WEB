@@ -16,7 +16,6 @@ export class ProfileModalBoxComponent implements OnInit{
     private imageUrl: string = '';
     public loading: boolean = false;
     constructor(@Inject(MAT_DIALOG_DATA) public profileUrl: string, private hubService: HubService){
-        this.loading = true;
     }
     public get image(): string{
         return UrlResolver.GeImageUrl(this.imageUrl, DefaultImageType.ProfilePictire);
@@ -25,6 +24,7 @@ export class ProfileModalBoxComponent implements OnInit{
         return `url('${this.image}')`;
     }
     ngOnInit(): void{
+        this.loading = true;
         this.hubService.getContact(this.profileUrl)
             .then(response => {
                 this.name = response.name,
