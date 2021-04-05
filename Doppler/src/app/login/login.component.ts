@@ -5,6 +5,7 @@ import { map, catchError } from "rxjs/operators";
 import { AuthenticationService } from '../services/authentication/authentication.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { HubService } from '../services/communication/hub.service';
 
 @Component({
     selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent{
     public UserName: string = '';
     public Password: string = '';
     @Input() nextUrl: string = '';
-    constructor(private authService: AuthenticationService, private snackBar: MatSnackBar, private router: Router){
+    constructor(private authService: AuthenticationService, private snackBar: MatSnackBar, private router: Router, private hubService: HubService){
 
     }
     public login(): void{
@@ -27,8 +28,9 @@ export class LoginComponent{
             this.loggingIn = false;
             this.showError(x.message);
             return of('');
-        })).subscribe(next => {
-            this.router.navigateByUrl('/');
+        })).subscribe(async next => {
+            await this.hubService.startConnection();
+            await this.router.navigateByUrl('/');
         }, error => {
             this.showError(error.message);
         });

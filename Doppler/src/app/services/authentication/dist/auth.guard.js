@@ -9,12 +9,14 @@ exports.__esModule = true;
 exports.AuthGuard = void 0;
 var core_1 = require("@angular/core");
 var AuthGuard = /** @class */ (function () {
-    function AuthGuard(authService, router) {
+    function AuthGuard(authService, router, hubService) {
         this.authService = authService;
         this.router = router;
+        this.hubService = hubService;
     }
     AuthGuard.prototype.canActivate = function (next, state) {
         if (this.authService.checkAuth()) {
+            return this.hubService.startConnection();
             return true;
         }
         this.router.navigate(['/login']);

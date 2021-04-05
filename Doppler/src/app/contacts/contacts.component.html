@@ -1,5 +1,17 @@
+<!-- <mat-card>
+    <mat-icon class="search-button" matSuffix (click)="changeHeaderTitle()">search</mat-icon>
+    <mat-form-field *ngIf="searchModeEnabled">
+        <input matInput>
+    </mat-form-field>
+</mat-card> -->
+<div class="search-container">
+    <mat-form-field class="search-field">
+        <input matInput>
+        <mat-icon class="search-button" matSuffix (click)="changeHeaderTitle()">search</mat-icon>
+    </mat-form-field>
+</div>
 <mat-list>
-    <div mat-subheader>My Contacts</div>
+    <div mat-subheader>{{contactsGridTitle}}</div>
     <mat-list-item>
         <mat-icon mat-list-icon>contacts</mat-icon>
         <div mat-line></div>

@@ -3,6 +3,8 @@ import * as signalR from "@microsoft/signalr";
 import { environment } from "src/environments/environment";
 import { Contact } from "src/models/contact";
 import { AuthenticationService } from '../authentication/authentication.service';
+import { Observable } from 'rxjs';
+import { User } from "../authentication/User";
 
 @Injectable({
     providedIn: 'root'
@@ -20,9 +22,16 @@ export class HubService{
         await this.startConnection();
         return await this.connection.invoke('GetUser', login);
     }
-    public async startConnection(): Promise<void>{
+    public async startConnection(): Promise<boolean>{
         if(this.connection.state === signalR.HubConnectionState.Disconnected){
-            return await this.connection.start();
+            await this.connection.start();
         }
+        return true;
+    }
+    /* public async GetUserContacts(): Promise<User[]>{
+        
+    } */
+    public async SearchUser(searchPatern: string): Promise<User[]>{
+        return await this.connection.invoke('SearchUsers', searchPatern);
     }
 }

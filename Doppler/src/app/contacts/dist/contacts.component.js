@@ -10,7 +10,13 @@ exports.ContactsComponent = void 0;
 var core_1 = require("@angular/core");
 var ContactsComponent = /** @class */ (function () {
     function ContactsComponent() {
+        this.contactsGridTitle = "My Contacts";
+        this.searchModeEnabled = false;
     }
+    ContactsComponent.prototype.changeHeaderTitle = function () {
+        this.contactsGridTitle = (this.searchModeEnabled === false) ? "Search result" : "My Contacts";
+        this.searchModeEnabled = !this.searchModeEnabled;
+    };
     ContactsComponent.prototype.ngOnInit = function () {
     };
     ContactsComponent = __decorate([

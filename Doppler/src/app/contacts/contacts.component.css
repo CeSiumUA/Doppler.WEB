@@ -1,0 +1,11 @@
+.search-button{
+    cursor: pointer;
+    user-select: none;
+}
+.search-field{
+    width: 100%;
+}
+.search-container{
+    padding-left: 1%;
+    padding-right: 1%;
+}

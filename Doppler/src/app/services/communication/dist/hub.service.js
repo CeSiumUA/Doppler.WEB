@@ -81,8 +81,23 @@ var HubService = /** @class */ (function () {
                     case 0:
                         if (!(this.connection.state === signalR.HubConnectionState.Disconnected)) return [3 /*break*/, 2];
                         return [4 /*yield*/, this.connection.start()];
+                    case 1:
+                        _a.sent();
+                        _a.label = 2;
+                    case 2: return [2 /*return*/, true];
+                }
+            });
+        });
+    };
+    /* public async GetUserContacts(): Promise<User[]>{
+        
+    } */
+    HubService.prototype.SearchUser = function (searchPatern) {
+        return __awaiter(this, void 0, Promise, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.connection.invoke('SearchUsers', searchPatern)];
                     case 1: return [2 /*return*/, _a.sent()];
-                    case 2: return [2 /*return*/];
                 }
             });
         });
