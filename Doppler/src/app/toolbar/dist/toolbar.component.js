@@ -50,6 +50,9 @@ var ToolbarComponent = /** @class */ (function () {
     ToolbarComponent.prototype.goToContacts = function () {
         this.router.navigateByUrl('/contacts');
     };
+    ToolbarComponent.prototype.goToChats = function () {
+        this.router.navigateByUrl('/');
+    };
     ToolbarComponent = __decorate([
         core_1.Component({
             selector: 'app-toolbar',

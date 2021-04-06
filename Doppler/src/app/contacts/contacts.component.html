@@ -6,15 +6,16 @@
 </mat-card> -->
 <div class="search-container">
     <mat-form-field class="search-field">
-        <input matInput>
+        <input matInput [(ngModel)]="searchPattern" (ngModelChange)="searchUser()">
         <mat-icon class="search-button" matSuffix (click)="changeHeaderTitle()">search</mat-icon>
     </mat-form-field>
 </div>
 <mat-list>
     <div mat-subheader>{{contactsGridTitle}}</div>
-    <mat-list-item>
-        <mat-icon mat-list-icon>contacts</mat-icon>
-        <div mat-line></div>
-        <div mat-line></div>
+    <mat-list-item *ngFor="let user of searchResults">
+        <!-- <mat-icon mat-list-icon>contacts</mat-icon> -->
+        <img matListAvatar class="profile-image" (click)="showProfile(user.login)" [src]="getImage(user.iconUrl)">
+        <div mat-line>{{user.name}}</div>
+        <div mat-line>{{user.phoneNumber}}</div>
     </mat-list-item>
 </mat-list>
