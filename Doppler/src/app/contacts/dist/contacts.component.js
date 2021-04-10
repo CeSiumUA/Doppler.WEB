@@ -44,6 +44,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.ContactsComponent = void 0;
 var core_1 = require("@angular/core");
+var User_1 = require("../services/authentication/User");
 var UrlResolver_1 = require("../../environments/UrlResolver");
 var enums_helper_1 = require("../../environments/enums.helper");
 var profileModalBox_component_1 = require("../profile/profile_modal_box/profileModalBox.component");
@@ -58,10 +59,6 @@ var ContactsComponent = /** @class */ (function () {
         this.searchResults = [];
         this.userContacts = [];
     }
-    /* public changeHeaderTitle(): void{
-        this.contactsGridTitle = (this.searchModeEnabled === false) ? 'Search result' : 'My Contacts';
-        this.searchModeEnabled = !this.searchModeEnabled;
-    } */
     ContactsComponent.prototype.searchUser = function () {
         return __awaiter(this, void 0, Promise, function () {
             var _this = this;
@@ -104,11 +101,18 @@ var ContactsComponent = /** @class */ (function () {
         if (imageType === void 0) { imageType = enums_helper_1.DefaultImageType.ProfilePictire; }
         return UrlResolver_1.UrlResolver.GeImageUrl(value, imageType);
     };
-    ContactsComponent.prototype.showProfile = function (profileId, isInContacts) {
+    Object.defineProperty(ContactsComponent.prototype, "profileCardType", {
+        get: function () {
+            return User_1.ProfileCardType;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    ContactsComponent.prototype.showProfile = function (profileId, profileCardType) {
         this.dialog.open(profileModalBox_component_1.ProfileModalBoxComponent, {
             data: {
                 profileId: profileId,
-                isInContacts: isInContacts
+                profileCardType: profileCardType
             }
         });
     };

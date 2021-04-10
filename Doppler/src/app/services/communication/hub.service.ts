@@ -5,18 +5,21 @@ import { Contact } from "src/models/contact";
 import { AuthenticationService } from '../authentication/authentication.service';
 import { Observable } from 'rxjs';
 import { User, UserContact } from '../authentication/User';
+import { LikeResult } from '../../../models/LikeResult';
 
 @Injectable({
     providedIn: 'root'
 })
 export class HubService{
     private connection : signalR.HubConnection;
+    private connectionPromise: Promise<void> | undefined;
     constructor(private authService : AuthenticationService){
         this.connection = new signalR.HubConnectionBuilder()
                             .withUrl(`${environment.apiUrl}/socialHub`, {
                                 accessTokenFactory: async () => await this.authService.getAccessToken()
                             })
                             .build();
+        this.connectionPromise = this.connection.start();
     }
     public async getUser(login: string): Promise<Contact>{
         await this.startConnection();
@@ -27,9 +30,10 @@ export class HubService{
         return await this.connection.invoke('GetContact', login);
     }
     public async startConnection(): Promise<boolean>{
-        if(this.connection.state === signalR.HubConnectionState.Disconnected){
+        /* if(this.connection.state === signalR.HubConnectionState.Disconnected){
             await this.connection.start();
-        }
+        } */
+        await this.connectionPromise;
         return true;
     }
     public async addToContacts(login: string, displayName: string | null = null): Promise<void>{
@@ -42,5 +46,13 @@ export class HubService{
     public async SearchUser(searchPatern: string): Promise<User[]>{
         await this.startConnection();
         return await this.connection.invoke('SearchUsers', searchPatern);
+    }
+    public async RateProfile(login: string, like: boolean = true): Promise<LikeResult>{
+        await this.startConnection();
+        return await this.connection.invoke('RateProfile', login, like);
+    }
+    public async CheckUserForLike(login: string): Promise<boolean>{
+        await this.startConnection();
+        return await this.connection.invoke('CheckUserForLike', login);
     }
 }

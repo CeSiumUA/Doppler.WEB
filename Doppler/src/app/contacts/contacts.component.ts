@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User, UserContact } from '../services/authentication/User';
+import { ProfileCardType, User, UserContact } from '../services/authentication/User';
 import { HubService } from '../services/communication/hub.service';
 import { UrlResolver } from '../../environments/UrlResolver';
 import { DefaultImageType } from '../../environments/enums.helper';
@@ -21,10 +21,6 @@ export class ContactsComponent implements OnInit{
     constructor(private hubService: HubService, private dialog: MatDialog){
 
     }
-    /* public changeHeaderTitle(): void{
-        this.contactsGridTitle = (this.searchModeEnabled === false) ? 'Search result' : 'My Contacts';
-        this.searchModeEnabled = !this.searchModeEnabled;
-    } */
     public async searchUser(): Promise<void>{
         if (this.searchPattern.length > 0){
             this.searchModeEnabled = true;
@@ -47,11 +43,14 @@ export class ContactsComponent implements OnInit{
     public getImage(value: string, imageType: DefaultImageType = DefaultImageType.ProfilePictire): string{
         return UrlResolver.GeImageUrl(value, imageType);
     }
-    public showProfile(profileId: string, isInContacts: boolean): void{
+    public get profileCardType(): typeof ProfileCardType{
+        return ProfileCardType;
+    }
+    public showProfile(profileId: string, profileCardType: ProfileCardType): void{
         this.dialog.open(ProfileModalBoxComponent, {
             data: {
                 profileId,
-                isInContacts
+                profileCardType
             },
         });
     }

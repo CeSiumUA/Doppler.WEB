@@ -50,6 +50,7 @@ var core_1 = require("@angular/core");
 var dialog_1 = require("@angular/material/dialog");
 var UrlResolver_1 = require("../../../environments/UrlResolver");
 var enums_helper_1 = require("src/environments/enums.helper");
+var User_1 = require("../../services/authentication/User");
 var ProfileModalBoxComponent = /** @class */ (function () {
     function ProfileModalBoxComponent(profileSettings, hubService) {
         this.profileSettings = profileSettings;
@@ -60,6 +61,9 @@ var ProfileModalBoxComponent = /** @class */ (function () {
         this.description = '';
         this.imageUrl = '';
         this.loading = false;
+        this.likes = 0;
+        this.isLiked = false;
+        this.likesLoading = true;
     }
     Object.defineProperty(ProfileModalBoxComponent.prototype, "image", {
         get: function () {
@@ -88,29 +92,68 @@ var ProfileModalBoxComponent = /** @class */ (function () {
             });
         });
     };
+    ProfileModalBoxComponent.prototype.startChatting = function () {
+        return __awaiter(this, void 0, Promise, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/];
+            });
+        });
+    };
+    ProfileModalBoxComponent.prototype.likeProfile = function () {
+        return __awaiter(this, void 0, Promise, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.likesLoading = true;
+                        return [4 /*yield*/, this.hubService.RateProfile(this.profileSettings.profileId, !this.isLiked)
+                                .then(function (result) {
+                                _this.likes = result.likes,
+                                    _this.isLiked = result.isLiked;
+                                _this.likesLoading = false;
+                            })];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    Object.defineProperty(ProfileModalBoxComponent.prototype, "profileCardType", {
+        get: function () {
+            return User_1.ProfileCardType;
+        },
+        enumerable: false,
+        configurable: true
+    });
     ProfileModalBoxComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.loading = true;
-        if (this.profileSettings.isInContacts) {
+        if (this.profileSettings.profileCardType === User_1.ProfileCardType.MyContactProfile) {
             this.hubService.getContact(this.profileSettings.profileId)
                 .then(function (response) {
-                _this.name = response.displayName,
-                    _this.phoneNumber = response.contact.phoneNumber,
-                    _this.imageUrl = response.contact.iconUrl,
-                    _this.loading = false,
-                    _this.description = response.contact.description;
+                _this.name = response.displayName;
+                _this.phoneNumber = response.contact.phoneNumber;
+                _this.imageUrl = response.contact.iconUrl;
+                _this.loading = false;
+                _this.description = response.contact.description;
+                _this.likes = response.contact.likes;
             });
         }
         else {
             this.hubService.getUser(this.profileSettings.profileId)
                 .then(function (response) {
-                _this.name = response.name,
-                    _this.phoneNumber = response.phoneNumber,
-                    _this.imageUrl = response.iconUrl,
-                    _this.loading = false,
-                    _this.description = response.description;
+                _this.name = response.name;
+                _this.phoneNumber = response.phoneNumber;
+                _this.imageUrl = response.iconUrl;
+                _this.loading = false;
+                _this.description = response.description;
+                _this.likes = response.likes;
             });
         }
+        this.hubService.CheckUserForLike(this.profileSettings.profileId)
+            .then(function (result) {
+            _this.isLiked = result;
+            _this.likesLoading = false;
+        });
     };
     ProfileModalBoxComponent = __decorate([
         core_1.Component({

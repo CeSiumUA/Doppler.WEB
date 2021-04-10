@@ -15,9 +15,24 @@
             </p>
             </mat-card-content>
             <mat-card-actions>
-                <button mat-button>LIKE</button>
-                <button mat-button>SHARE</button>
-                <button *ngIf="!this.profileSettings.isInContacts" (click)="addToContacts()" mat-button>ADD</button>
+                <button *ngIf="!likesLoading" mat-button (click)="likeProfile()">
+                    <mat-icon *ngIf="isLiked">favorite</mat-icon>
+                    <mat-icon *ngIf="!isLiked">favorite_border</mat-icon>
+                    {{likes}}
+                </button>
+                <mat-spinner *ngIf="likesLoading" color="accent" diameter="20"></mat-spinner>
+                <button mat-button>
+                    <mat-icon>share</mat-icon>
+                    SHARE
+                </button>
+                <button *ngIf="this.profileSettings.profileCardType == profileCardType.UserProfile" (click)="addToContacts()" mat-button>
+                    <mat-icon>add</mat-icon>
+                    ADD
+                </button>
+                <button *ngIf="this.profileSettings.profileCardType == profileCardType.MyContactProfile" (click)="startChatting()" mat-button>
+                    <mat-icon>chat_bubble</mat-icon>
+                    CHAT
+                </button>
             </mat-card-actions>
     </div>
   </mat-card>

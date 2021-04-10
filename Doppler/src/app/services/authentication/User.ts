@@ -10,3 +10,9 @@ export interface UserContact {
     contact: User;
     displayName: string;
 }
+
+export enum ProfileCardType{
+    MyProfile = 0,
+    UserProfile = 1,
+    MyContactProfile
+}

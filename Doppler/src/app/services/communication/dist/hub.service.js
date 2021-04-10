@@ -60,6 +60,7 @@ var HubService = /** @class */ (function () {
             }); }); }
         })
             .build();
+        this.connectionPromise = this.connection.start();
     }
     HubService.prototype.getUser = function (login) {
         return __awaiter(this, void 0, Promise, function () {
@@ -91,13 +92,17 @@ var HubService = /** @class */ (function () {
         return __awaiter(this, void 0, Promise, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        if (!(this.connection.state === signalR.HubConnectionState.Disconnected)) return [3 /*break*/, 2];
-                        return [4 /*yield*/, this.connection.start()];
+                    case 0: 
+                    /* if(this.connection.state === signalR.HubConnectionState.Disconnected){
+                        await this.connection.start();
+                    } */
+                    return [4 /*yield*/, this.connectionPromise];
                     case 1:
+                        /* if(this.connection.state === signalR.HubConnectionState.Disconnected){
+                            await this.connection.start();
+                        } */
                         _a.sent();
-                        _a.label = 2;
-                    case 2: return [2 /*return*/, true];
+                        return [2 /*return*/, true];
                 }
             });
         });
@@ -136,6 +141,33 @@ var HubService = /** @class */ (function () {
                     case 1:
                         _a.sent();
                         return [4 /*yield*/, this.connection.invoke('SearchUsers', searchPatern)];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    HubService.prototype.RateProfile = function (login, like) {
+        if (like === void 0) { like = true; }
+        return __awaiter(this, void 0, Promise, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.startConnection()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.connection.invoke('RateProfile', login, like)];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    HubService.prototype.CheckUserForLike = function (login) {
+        return __awaiter(this, void 0, Promise, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.startConnection()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.connection.invoke('CheckUserForLike', login)];
                     case 2: return [2 /*return*/, _a.sent()];
                 }
             });

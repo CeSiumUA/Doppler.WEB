@@ -15,7 +15,7 @@
         <div mat-subheader>{{searchGridTitle}}</div>
         <mat-list-item *ngFor="let user of searchResults">
             <!-- <mat-icon mat-list-icon>contacts</mat-icon> -->
-            <img matListAvatar class="profile-image" (click)="showProfile(user.login, false)" [src]="getImage(user.iconUrl)">
+            <img matListAvatar class="profile-image" (click)="showProfile(user.login, profileCardType.UserProfile)" [src]="getImage(user.iconUrl)">
             <div mat-line>{{user.name}}</div>
             <div mat-line>{{user.phoneNumber}}</div>
         </mat-list-item>
@@ -24,7 +24,7 @@
     <div mat-subheader>{{contactsGridTitle}}</div>
     <mat-list-item *ngFor="let user of userContacts">
         <!-- <mat-icon mat-list-icon>contacts</mat-icon> -->
-        <img matListAvatar class="profile-image" (click)="showProfile(user.contact.login, true)" [src]="getImage(user.contact.iconUrl)">
+        <img matListAvatar class="profile-image" (click)="showProfile(user.contact.login, profileCardType.MyContactProfile)" [src]="getImage(user.contact.iconUrl)">
         <div mat-line>{{user.displayName}}</div>
         <div mat-line>{{user.contact.phoneNumber}}</div>
     </mat-list-item>

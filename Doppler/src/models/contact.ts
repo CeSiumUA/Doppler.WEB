@@ -4,4 +4,5 @@ export interface Contact{
     phoneNumber: string;
     iconUrl: string;
     description: string;
+    likes: number;
 }
