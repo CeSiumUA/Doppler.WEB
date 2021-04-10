@@ -44,7 +44,10 @@ var ToolbarComponent = /** @class */ (function () {
     };
     ToolbarComponent.prototype.showProfile = function () {
         this.dialog.open(profileModalBox_component_1.ProfileModalBoxComponent, {
-            data: this.authService.loginName
+            data: {
+                profileId: this.authService.loginName,
+                isInContacts: false
+            }
         });
     };
     ToolbarComponent.prototype.goToContacts = function () {

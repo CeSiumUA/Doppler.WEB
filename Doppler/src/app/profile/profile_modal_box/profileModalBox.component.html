@@ -1,6 +1,6 @@
 <mat-card class="card">
     <div *ngIf="loading">
-        <mat-progress-spinner></mat-progress-spinner>
+        <mat-spinner color="accent"></mat-spinner>
     </div>
     <div *ngIf="!loading">
         <mat-card-header>
@@ -15,8 +15,9 @@
             </p>
             </mat-card-content>
             <mat-card-actions>
-            <button mat-button>LIKE</button>
-            <button mat-button>SHARE</button>
+                <button mat-button>LIKE</button>
+                <button mat-button>SHARE</button>
+                <button *ngIf="!this.profileSettings.isInContacts" (click)="addToContacts()" mat-button>ADD</button>
             </mat-card-actions>
     </div>
   </mat-card>

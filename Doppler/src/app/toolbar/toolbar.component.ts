@@ -30,7 +30,10 @@ export class ToolbarComponent{
     }
     public showProfile(): void{
         this.dialog.open(ProfileModalBoxComponent, {
-            data: this.authService.loginName,
+            data: {
+                profileId: this.authService.loginName,
+                isInContacts: false
+            },
         });
     }
     public goToContacts(): void{

@@ -52,14 +52,16 @@ var ContactsComponent = /** @class */ (function () {
         this.hubService = hubService;
         this.dialog = dialog;
         this.contactsGridTitle = 'My Contacts';
+        this.searchGridTitle = 'Search result';
         this.searchModeEnabled = false;
         this.searchPattern = '';
         this.searchResults = [];
+        this.userContacts = [];
     }
-    ContactsComponent.prototype.changeHeaderTitle = function () {
+    /* public changeHeaderTitle(): void{
         this.contactsGridTitle = (this.searchModeEnabled === false) ? 'Search result' : 'My Contacts';
         this.searchModeEnabled = !this.searchModeEnabled;
-    };
+    } */
     ContactsComponent.prototype.searchUser = function () {
         return __awaiter(this, void 0, Promise, function () {
             var _this = this;
@@ -67,6 +69,7 @@ var ContactsComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         if (!(this.searchPattern.length > 0)) return [3 /*break*/, 2];
+                        this.searchModeEnabled = true;
                         return [4 /*yield*/, this.hubService.SearchUser(this.searchPattern)
                                 .then(function (response) {
                                 _this.searchResults = response;
@@ -75,9 +78,24 @@ var ContactsComponent = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
+                        this.searchModeEnabled = false;
                         this.searchResults = [];
                         _a.label = 3;
                     case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ContactsComponent.prototype.getUserContacts = function () {
+        return __awaiter(this, void 0, Promise, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.hubService.GetUserContacts()
+                            .then(function (result) {
+                            _this.userContacts = result;
+                        })];
+                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
@@ -86,12 +104,25 @@ var ContactsComponent = /** @class */ (function () {
         if (imageType === void 0) { imageType = enums_helper_1.DefaultImageType.ProfilePictire; }
         return UrlResolver_1.UrlResolver.GeImageUrl(value, imageType);
     };
-    ContactsComponent.prototype.showProfile = function (profileId) {
+    ContactsComponent.prototype.showProfile = function (profileId, isInContacts) {
         this.dialog.open(profileModalBox_component_1.ProfileModalBoxComponent, {
-            data: profileId
+            data: {
+                profileId: profileId,
+                isInContacts: isInContacts
+            }
         });
     };
     ContactsComponent.prototype.ngOnInit = function () {
+        return __awaiter(this, void 0, Promise, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.getUserContacts()];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     ContactsComponent = __decorate([
         core_1.Component({

@@ -61,7 +61,7 @@ var HubService = /** @class */ (function () {
         })
             .build();
     }
-    HubService.prototype.getContact = function (login) {
+    HubService.prototype.getUser = function (login) {
         return __awaiter(this, void 0, Promise, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -69,6 +69,19 @@ var HubService = /** @class */ (function () {
                     case 1:
                         _a.sent();
                         return [4 /*yield*/, this.connection.invoke('GetUser', login)];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    HubService.prototype.getContact = function (login) {
+        return __awaiter(this, void 0, Promise, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.startConnection()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.connection.invoke('GetContact', login)];
                     case 2: return [2 /*return*/, _a.sent()];
                 }
             });
@@ -89,15 +102,41 @@ var HubService = /** @class */ (function () {
             });
         });
     };
-    /* public async GetUserContacts(): Promise<User[]>{
-        
-    } */
+    HubService.prototype.addToContacts = function (login, displayName) {
+        if (displayName === void 0) { displayName = null; }
+        return __awaiter(this, void 0, Promise, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.connection.invoke('AddToContacts', login, displayName)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    HubService.prototype.GetUserContacts = function (skip, take) {
+        if (skip === void 0) { skip = 0; }
+        if (take === void 0) { take = null; }
+        return __awaiter(this, void 0, Promise, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.startConnection()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.connection.invoke('GetUserContacts', skip, take)];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
     HubService.prototype.SearchUser = function (searchPatern) {
         return __awaiter(this, void 0, Promise, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.connection.invoke('SearchUsers', searchPatern)];
-                    case 1: return [2 /*return*/, _a.sent()];
+                    case 0: return [4 /*yield*/, this.startConnection()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.connection.invoke('SearchUsers', searchPatern)];
+                    case 2: return [2 /*return*/, _a.sent()];
                 }
             });
         });

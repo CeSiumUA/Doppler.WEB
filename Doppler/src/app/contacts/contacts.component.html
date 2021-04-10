@@ -7,15 +7,25 @@
 <div class="search-container">
     <mat-form-field class="search-field">
         <input matInput [(ngModel)]="searchPattern" (ngModelChange)="searchUser()">
-        <mat-icon class="search-button" matSuffix (click)="changeHeaderTitle()">search</mat-icon>
+        <mat-icon class="search-button" matSuffix>search</mat-icon>
     </mat-form-field>
 </div>
 <mat-list>
+    <div *ngIf="searchModeEnabled">
+        <div mat-subheader>{{searchGridTitle}}</div>
+        <mat-list-item *ngFor="let user of searchResults">
+            <!-- <mat-icon mat-list-icon>contacts</mat-icon> -->
+            <img matListAvatar class="profile-image" (click)="showProfile(user.login, false)" [src]="getImage(user.iconUrl)">
+            <div mat-line>{{user.name}}</div>
+            <div mat-line>{{user.phoneNumber}}</div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+    </div>
     <div mat-subheader>{{contactsGridTitle}}</div>
-    <mat-list-item *ngFor="let user of searchResults">
+    <mat-list-item *ngFor="let user of userContacts">
         <!-- <mat-icon mat-list-icon>contacts</mat-icon> -->
-        <img matListAvatar class="profile-image" (click)="showProfile(user.login)" [src]="getImage(user.iconUrl)">
-        <div mat-line>{{user.name}}</div>
-        <div mat-line>{{user.phoneNumber}}</div>
+        <img matListAvatar class="profile-image" (click)="showProfile(user.contact.login, true)" [src]="getImage(user.contact.iconUrl)">
+        <div mat-line>{{user.displayName}}</div>
+        <div mat-line>{{user.contact.phoneNumber}}</div>
     </mat-list-item>
 </mat-list>

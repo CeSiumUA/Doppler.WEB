@@ -16,7 +16,7 @@ export class ProfileModalBoxComponent implements OnInit{
     public description: string = '';
     private imageUrl: string = '';
     public loading: boolean = false;
-    constructor(@Inject(MAT_DIALOG_DATA) public profileUrl: string, private hubService: HubService){
+    constructor(@Inject(MAT_DIALOG_DATA) public profileSettings: any, private hubService: HubService){
     }
     public get image(): string{
         return UrlResolver.GeImageUrl(this.imageUrl, DefaultImageType.ProfilePictire);
@@ -24,15 +24,31 @@ export class ProfileModalBoxComponent implements OnInit{
     public get urlImage(): string{
         return `url('${this.image}')`;
     }
+    public async addToContacts(): Promise<void>{
+        await this.hubService.addToContacts(this.profileSettings.profileId)
+                .then(x => x);
+    }
     ngOnInit(): void{
         this.loading = true;
-        this.hubService.getContact(this.profileUrl)
-            .then(response => {
-                this.name = response.name,
-                this.phoneNumber = response.phoneNumber,
-                this.imageUrl = response.iconUrl,
-                this.loading = false,
-                this.description = response.description
-            });
+        if (this.profileSettings.isInContacts){
+            this.hubService.getContact(this.profileSettings.profileId)
+                .then(response => {
+                    this.name = response.displayName,
+                    this.phoneNumber = response.contact.phoneNumber,
+                    this.imageUrl = response.contact.iconUrl,
+                    this.loading = false,
+                    this.description = response.contact.description;
+                });
+        }
+        else {
+            this.hubService.getUser(this.profileSettings.profileId)
+                .then(response => {
+                    this.name = response.name,
+                    this.phoneNumber = response.phoneNumber,
+                    this.imageUrl = response.iconUrl,
+                    this.loading = false,
+                    this.description = response.description;
+                });
+        }
     }
 }
