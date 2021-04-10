@@ -136,6 +136,9 @@ var ProfileModalBoxComponent = /** @class */ (function () {
                 _this.loading = false;
                 _this.description = response.contact.description;
                 _this.likes = response.contact.likes;
+                if (_this.likes === 0) {
+                    _this.likes = 'LIKE';
+                }
             });
         }
         else {

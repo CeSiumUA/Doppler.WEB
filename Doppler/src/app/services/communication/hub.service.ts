@@ -13,7 +13,7 @@ import { LikeResult } from '../../../models/LikeResult';
 export class HubService{
     private connection : signalR.HubConnection;
     private connectionPromise: Promise<void> | undefined;
-    constructor(private authService : AuthenticationService){
+    constructor(public authService : AuthenticationService){
         this.connection = new signalR.HubConnectionBuilder()
                             .withUrl(`${environment.apiUrl}/socialHub`, {
                                 accessTokenFactory: async () => await this.authService.getAccessToken()

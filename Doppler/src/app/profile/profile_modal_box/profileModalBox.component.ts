@@ -17,7 +17,7 @@ export class ProfileModalBoxComponent implements OnInit{
     public description: string = '';
     private imageUrl: string = '';
     public loading: boolean = false;
-    public likes: number = 0;
+    public likes: string | number = 0;
     public isLiked: boolean = false;
     public likesLoading = true;
     constructor(@Inject(MAT_DIALOG_DATA) public profileSettings: any, private hubService: HubService){
@@ -58,6 +58,9 @@ export class ProfileModalBoxComponent implements OnInit{
                     this.loading = false;
                     this.description = response.contact.description;
                     this.likes = response.contact.likes;
+                    if(this.likes === 0){
+                        this.likes = 'LIKE';
+                    }
                 });
         }
         else {

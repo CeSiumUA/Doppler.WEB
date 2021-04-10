@@ -58,6 +58,8 @@ var ContactsComponent = /** @class */ (function () {
         this.searchPattern = '';
         this.searchResults = [];
         this.userContacts = [];
+        this.contactsLoading = true;
+        this.searchResultLodaing = false;
     }
     ContactsComponent.prototype.searchUser = function () {
         return __awaiter(this, void 0, Promise, function () {
@@ -66,10 +68,24 @@ var ContactsComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         if (!(this.searchPattern.length > 0)) return [3 /*break*/, 2];
+                        this.searchResultLodaing = true;
                         this.searchModeEnabled = true;
                         return [4 /*yield*/, this.hubService.SearchUser(this.searchPattern)
                                 .then(function (response) {
-                                _this.searchResults = response;
+                                var mappedContacts = _this.userContacts.map(function (x) { return x.contact; });
+                                _this.searchResults = response
+                                    .filter(function (fltr) {
+                                    return !mappedContacts.find(function (x) { return x.login === fltr.login; }) && fltr.login !== _this.hubService.authService.loginName;
+                                });
+                                _this.searchResultLodaing = false;
+                                _this.userContacts = _this.userContacts.filter(function (fltr) {
+                                    var lowerCasePattern = _this.searchPattern.toLowerCase();
+                                    return fltr.contact.email.toLowerCase().includes(lowerCasePattern)
+                                        || fltr.displayName.toLowerCase().includes(lowerCasePattern)
+                                        || fltr.contact.login.toLowerCase().includes(lowerCasePattern)
+                                        || fltr.contact.name.toLowerCase().includes(lowerCasePattern)
+                                        || fltr.contact.phoneNumber.toLowerCase() === lowerCasePattern;
+                                });
                             })];
                     case 1:
                         _a.sent();
@@ -88,10 +104,13 @@ var ContactsComponent = /** @class */ (function () {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.hubService.GetUserContacts()
-                            .then(function (result) {
-                            _this.userContacts = result;
-                        })];
+                    case 0:
+                        this.contactsLoading = true;
+                        return [4 /*yield*/, this.hubService.GetUserContacts()
+                                .then(function (result) {
+                                _this.userContacts = result;
+                                _this.contactsLoading = false;
+                            })];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });

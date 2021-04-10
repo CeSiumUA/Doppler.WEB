@@ -18,15 +18,31 @@ export class ContactsComponent implements OnInit{
     public searchPattern = '';
     public searchResults: User[] = [];
     public userContacts: UserContact[] = [];
+    public contactsLoading = true;
+    public searchResultLodaing = false;
     constructor(private hubService: HubService, private dialog: MatDialog){
 
     }
     public async searchUser(): Promise<void>{
         if (this.searchPattern.length > 0){
+            this.searchResultLodaing = true;
             this.searchModeEnabled = true;
             await this.hubService.SearchUser(this.searchPattern)
                 .then(response => {
-                    this.searchResults = response;
+                    const mappedContacts = this.userContacts.map(x => x.contact);
+                    this.searchResults = response
+                        .filter(fltr =>
+                            !mappedContacts.find(x => x.login === fltr.login
+                                ) && fltr.login !== this.hubService.authService.loginName);
+                    this.searchResultLodaing = false;
+                    this.userContacts = this.userContacts.filter(fltr => {
+                        const lowerCasePattern = this.searchPattern.toLowerCase();
+                        return fltr.contact.email.toLowerCase().includes(lowerCasePattern)
+                         || fltr.displayName.toLowerCase().includes(lowerCasePattern)
+                         || fltr.contact.login.toLowerCase().includes(lowerCasePattern)
+                         || fltr.contact.name.toLowerCase().includes(lowerCasePattern)
+                         || fltr.contact.phoneNumber.toLowerCase() === lowerCasePattern;
+                    });
                 });
         }
         else{
@@ -35,9 +51,11 @@ export class ContactsComponent implements OnInit{
         }
     }
     public async getUserContacts(): Promise<void>{
+        this.contactsLoading = true;
         return await this.hubService.GetUserContacts()
             .then(result => {
                 this.userContacts = result;
+                this.contactsLoading = false;
         });
     }
     public getImage(value: string, imageType: DefaultImageType = DefaultImageType.ProfilePictire): string{
