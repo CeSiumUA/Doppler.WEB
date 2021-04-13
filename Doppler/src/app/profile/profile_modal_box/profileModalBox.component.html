@@ -4,11 +4,11 @@
     </div>
     <div *ngIf="!loading">
         <mat-card-header>
-            <div mat-card-avatar [style.background-image]="urlImage" class="card-header-image"></div>
+            <div mat-card-avatar [style.background-image]="urlImage | secure | async" class="card-header-image"></div>
             <mat-card-title>{{name}}</mat-card-title>
             <mat-card-subtitle>{{phoneNumber}}</mat-card-subtitle>
             </mat-card-header>
-            <img mat-card-image [src]="image" alt="Photo of a Shiba Inu">
+            <img mat-card-image [attr.src]="image | secure | async" alt="Photo of a User">
             <mat-card-content>
             <p>
                 {{description}}

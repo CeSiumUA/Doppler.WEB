@@ -22,6 +22,8 @@ var home_component_1 = require("./home/home.component");
 var toolbar_component_1 = require("./toolbar/toolbar.component");
 var profileModalBox_component_1 = require("./profile/profile_modal_box/profileModalBox.component");
 var contacts_component_1 = require("./contacts/contacts.component");
+var auth_interceptor_1 = require("./services/communication/auth.interceptor");
+var secure_pipe_1 = require("./services/communication/secure.pipe");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -33,7 +35,8 @@ var AppModule = /** @class */ (function () {
                 home_component_1.HomeComponent,
                 toolbar_component_1.ToolbarComponent,
                 profileModalBox_component_1.ProfileModalBoxComponent,
-                contacts_component_1.ContactsComponent
+                contacts_component_1.ContactsComponent,
+                secure_pipe_1.SecurePipe,
             ],
             imports: [
                 platform_browser_1.BrowserModule,
@@ -44,7 +47,13 @@ var AppModule = /** @class */ (function () {
                 animations_1.BrowserAnimationsModule,
                 app_routing_module_1.AppRoutingModule
             ],
-            providers: [],
+            providers: [
+                {
+                    provide: http_1.HTTP_INTERCEPTORS,
+                    useClass: auth_interceptor_1.AuthInterceptor,
+                    multi: true
+                },
+            ],
             bootstrap: [app_component_1.AppComponent]
         })
     ], AppModule);

@@ -6,7 +6,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppMaterialModule } from '../appmaterial.module';
@@ -14,6 +14,8 @@ import { HomeComponent } from './home/home.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { ProfileModalBoxComponent } from './profile/profile_modal_box/profileModalBox.component';
 import { ContactsComponent } from './contacts/contacts.component';
+import { AuthInterceptor } from './services/communication/auth.interceptor';
+import { SecurePipe } from './services/communication/secure.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { ContactsComponent } from './contacts/contacts.component';
     HomeComponent,
     ToolbarComponent,
     ProfileModalBoxComponent,
-    ContactsComponent
+    ContactsComponent,
+    SecurePipe,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,13 @@ import { ContactsComponent } from './contacts/contacts.component';
     BrowserAnimationsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

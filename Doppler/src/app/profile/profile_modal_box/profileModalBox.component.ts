@@ -4,6 +4,8 @@ import { HubService } from '../../services/communication/hub.service';
 import { UrlResolver } from '../../../environments/UrlResolver';
 import { DefaultImageType } from "src/environments/enums.helper";
 import { ProfileCardType } from '../../services/authentication/User';
+import { SecurePipe } from '../../services/communication/secure.pipe';
+
 
 @Component({
     selector: 'app-profile-modalbox',
