@@ -5,6 +5,7 @@ import { UrlResolver } from '../../../environments/UrlResolver';
 import { DefaultImageType } from "src/environments/enums.helper";
 import { ProfileCardType } from '../../services/authentication/User';
 import { SecurePipe } from '../../services/communication/secure.pipe';
+import { HttpClient } from "@angular/common/http";
 
 
 @Component({
@@ -22,7 +23,7 @@ export class ProfileModalBoxComponent implements OnInit{
     public likes: string | number = 0;
     public isLiked: boolean = false;
     public likesLoading = true;
-    constructor(@Inject(MAT_DIALOG_DATA) public profileSettings: any, private hubService: HubService){
+    constructor(@Inject(MAT_DIALOG_DATA) public profileSettings: any, private hubService: HubService, private httpClient: HttpClient){
     }
     public get image(): string{
         return UrlResolver.GeImageUrl(this.imageUrl, DefaultImageType.ProfilePictire);
@@ -47,8 +48,20 @@ export class ProfileModalBoxComponent implements OnInit{
                 this.likesLoading = false;
             });
     }
-    public async setActivePhoto(): Promise<void>{
-        
+    public async setActivePhoto(files: FileList | null): Promise<void>{
+        if(files !== null){
+            const firstFile = files.item(0);
+            if(firstFile != null){
+                const endpoint = UrlResolver.GetFileUploadUrl();
+                const formData = new FormData();
+                formData.append('files', firstFile, firstFile.name);
+                this.httpClient
+                    .post(endpoint, formData)
+                    .subscribe(result => {
+                        
+                    });
+            }
+        }
     }
     public get profileCardType(): typeof ProfileCardType{
         return ProfileCardType;

@@ -18,8 +18,7 @@ var AuthInterceptor = /** @class */ (function () {
         if (!req.headers.has('Authorization')) {
             return rxjs_1.from(this.authService.getAccessToken())
                 .pipe(operators_1.switchMap(function (token) {
-                var headers = req.headers.set('Authorization', 'Bearer ' + token)
-                    .append('Content-Type', 'application/json');
+                var headers = req.headers.set('Authorization', 'Bearer ' + token);
                 var requestClone = req.clone({ headers: headers });
                 return next.handle(requestClone);
             }));

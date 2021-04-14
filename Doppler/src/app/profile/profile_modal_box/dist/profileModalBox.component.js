@@ -52,9 +52,10 @@ var UrlResolver_1 = require("../../../environments/UrlResolver");
 var enums_helper_1 = require("src/environments/enums.helper");
 var User_1 = require("../../services/authentication/User");
 var ProfileModalBoxComponent = /** @class */ (function () {
-    function ProfileModalBoxComponent(profileSettings, hubService) {
+    function ProfileModalBoxComponent(profileSettings, hubService, httpClient) {
         this.profileSettings = profileSettings;
         this.hubService = hubService;
+        this.httpClient = httpClient;
         //TODO Auth Check
         this.name = '';
         this.phoneNumber = '';
@@ -118,9 +119,22 @@ var ProfileModalBoxComponent = /** @class */ (function () {
             });
         });
     };
-    ProfileModalBoxComponent.prototype.setActivePhoto = function () {
+    ProfileModalBoxComponent.prototype.setActivePhoto = function (files) {
         return __awaiter(this, void 0, Promise, function () {
+            var firstFile, endpoint, formData;
             return __generator(this, function (_a) {
+                if (files !== null) {
+                    firstFile = files.item(0);
+                    if (firstFile != null) {
+                        endpoint = UrlResolver_1.UrlResolver.GetFileUploadUrl();
+                        formData = new FormData();
+                        formData.append('files', firstFile, firstFile.name);
+                        this.httpClient
+                            .post(endpoint, formData)
+                            .subscribe(function (result) {
+                        });
+                    }
+                }
                 return [2 /*return*/];
             });
         });

@@ -17,6 +17,9 @@ var UrlResolver = /** @class */ (function () {
     UrlResolver.GetRefreshTokenUrl = function () {
         return environment_1.environment.apiUrl + "/api/authentication/recoveraccess";
     };
+    UrlResolver.GetFileUploadUrl = function () {
+        return environment_1.environment.apiUrl + "/cdn/files/uploadfile";
+    };
     return UrlResolver;
 }());
 exports.UrlResolver = UrlResolver;

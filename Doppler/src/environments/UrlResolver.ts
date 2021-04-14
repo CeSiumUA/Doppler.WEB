@@ -1,6 +1,5 @@
 import { environment } from './environment';
 import { DefaultImageType } from './enums.helper';
-import { stat } from 'fs';
 import { Contact } from '../models/contact';
 import { Observable } from 'rxjs';
 export class UrlResolver{
@@ -15,6 +14,9 @@ export class UrlResolver{
     }
     public static GetRefreshTokenUrl(): string{
         return `${environment.apiUrl}/api/authentication/recoveraccess`;
+    }
+    public static GetFileUploadUrl(): string{
+        return `${environment.apiUrl}/cdn/files/uploadfile`
     }
     /* public static GetUser(guid: string): Observable<Contact>{
         const httpUserRequest = `${environment.apiUrl}/api/`

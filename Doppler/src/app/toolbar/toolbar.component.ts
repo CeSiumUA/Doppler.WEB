@@ -5,6 +5,7 @@ import { DefaultImageType } from 'src/environments/enums.helper';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileModalBoxComponent } from '../profile/profile_modal_box/profileModalBox.component';
 import { Router } from '@angular/router';
+import { ProfileCardType } from '../services/authentication/User';
 
 @Component({
     selector: 'app-toolbar',
@@ -32,7 +33,7 @@ export class ToolbarComponent{
         this.dialog.open(ProfileModalBoxComponent, {
             data: {
                 profileId: this.authService.loginName,
-                isInContacts: false
+                profileCardType: ProfileCardType.MyProfile,
             },
         });
     }

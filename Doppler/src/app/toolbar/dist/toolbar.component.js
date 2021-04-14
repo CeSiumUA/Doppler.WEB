@@ -11,6 +11,7 @@ var core_1 = require("@angular/core");
 var UrlResolver_1 = require("../../environments/UrlResolver");
 var enums_helper_1 = require("src/environments/enums.helper");
 var profileModalBox_component_1 = require("../profile/profile_modal_box/profileModalBox.component");
+var User_1 = require("../services/authentication/User");
 var ToolbarComponent = /** @class */ (function () {
     function ToolbarComponent(authService, dialog, router) {
         this.authService = authService;
@@ -46,7 +47,7 @@ var ToolbarComponent = /** @class */ (function () {
         this.dialog.open(profileModalBox_component_1.ProfileModalBoxComponent, {
             data: {
                 profileId: this.authService.loginName,
-                isInContacts: false
+                profileCardType: User_1.ProfileCardType.MyProfile
             }
         });
     };

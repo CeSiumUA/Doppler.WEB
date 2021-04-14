@@ -33,7 +33,8 @@
                     <mat-icon>chat_bubble</mat-icon>
                     CHAT
                 </button>
-                <button *ngIf="this.profileSettings.profileCardType == profileCardType.MyProfile" (click)="setActivePhoto()" mat-button>
+                <input #file type="file" accept="image/*" (change)="setActivePhoto(file.files)" style="display: none;"/>
+                <button *ngIf="this.profileSettings.profileCardType == profileCardType.MyProfile" (click)="file.click()" mat-button>
                     <mat-icon>add_a_photo</mat-icon>
                     PHOTO
                 </button>
