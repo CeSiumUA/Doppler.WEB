@@ -4,11 +4,11 @@
     </div>
     <div *ngIf="!loading">
         <mat-card-header>
-            <div mat-card-avatar [style.background-image]="urlImage | secure | async" class="card-header-image"></div>
+            <img mat-card-avatar [src]="urlImage | secure | async" class="card-header-image"/>
             <mat-card-title>{{name}}</mat-card-title>
             <mat-card-subtitle>{{phoneNumber}}</mat-card-subtitle>
             </mat-card-header>
-            <img mat-card-image [attr.src]="image | secure | async" alt="Photo of a User">
+            <img mat-card-image class="user-photo" [attr.src]="image | secure | async" alt="Photo of a User">
             <mat-card-content>
             <p>
                 {{description}}
@@ -32,6 +32,10 @@
                 <button *ngIf="this.profileSettings.profileCardType == profileCardType.MyContactProfile" (click)="startChatting()" mat-button>
                     <mat-icon>chat_bubble</mat-icon>
                     CHAT
+                </button>
+                <button *ngIf="this.profileSettings.profileCardType == profileCardType.MyProfile" (click)="setActivePhoto()" mat-button>
+                    <mat-icon>add_a_photo</mat-icon>
+                    PHOTO
                 </button>
             </mat-card-actions>
     </div>

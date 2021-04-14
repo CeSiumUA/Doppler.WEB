@@ -1,6 +1,6 @@
 <mat-card>
     <mat-card-header>
-        <img class="profile-image" mat-card-avatar src="{{iconUrl}}" (click)="showProfile()"/>
+        <img class="profile-image" mat-card-avatar [src]="iconUrl | secure | async" (click)="showProfile()"/>
         <mat-card-title>{{userName}}</mat-card-title>
         <mat-card-subtitle>{{phoneNumber}}</mat-card-subtitle>
     </mat-card-header>

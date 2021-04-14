@@ -92,15 +92,12 @@ var HubService = /** @class */ (function () {
         return __awaiter(this, void 0, Promise, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: 
-                    /* if(this.connection.state === signalR.HubConnectionState.Disconnected){
-                        await this.connection.start();
-                    } */
-                    return [4 /*yield*/, this.connectionPromise];
+                    case 0:
+                        if (this.connection.state === signalR.HubConnectionState.Disconnected) {
+                            this.connectionPromise = this.connection.start();
+                        }
+                        return [4 /*yield*/, this.connectionPromise];
                     case 1:
-                        /* if(this.connection.state === signalR.HubConnectionState.Disconnected){
-                            await this.connection.start();
-                        } */
                         _a.sent();
                         return [2 /*return*/, true];
                 }

@@ -30,9 +30,9 @@ export class HubService{
         return await this.connection.invoke('GetContact', login);
     }
     public async startConnection(): Promise<boolean>{
-        /* if(this.connection.state === signalR.HubConnectionState.Disconnected){
-            await this.connection.start();
-        } */
+        if(this.connection.state === signalR.HubConnectionState.Disconnected){
+            this.connectionPromise = this.connection.start();
+        }
         await this.connectionPromise;
         return true;
     }

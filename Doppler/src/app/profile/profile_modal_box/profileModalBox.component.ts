@@ -28,7 +28,8 @@ export class ProfileModalBoxComponent implements OnInit{
         return UrlResolver.GeImageUrl(this.imageUrl, DefaultImageType.ProfilePictire);
     }
     public get urlImage(): string{
-        return `url('${this.image}')`;
+        //return `url('${this.image}')`;
+        return this.image;
     }
     public async addToContacts(): Promise<void>{
         await this.hubService.addToContacts(this.profileSettings.profileId)
@@ -45,6 +46,9 @@ export class ProfileModalBoxComponent implements OnInit{
                 this.isLiked = result.isLiked;
                 this.likesLoading = false;
             });
+    }
+    public async setActivePhoto(): Promise<void>{
+        
     }
     public get profileCardType(): typeof ProfileCardType{
         return ProfileCardType;

@@ -74,7 +74,8 @@ var ProfileModalBoxComponent = /** @class */ (function () {
     });
     Object.defineProperty(ProfileModalBoxComponent.prototype, "urlImage", {
         get: function () {
-            return "url('" + this.image + "')";
+            //return `url('${this.image}')`;
+            return this.image;
         },
         enumerable: false,
         configurable: true
@@ -114,6 +115,13 @@ var ProfileModalBoxComponent = /** @class */ (function () {
                             })];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
+            });
+        });
+    };
+    ProfileModalBoxComponent.prototype.setActivePhoto = function () {
+        return __awaiter(this, void 0, Promise, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/];
             });
         });
     };
