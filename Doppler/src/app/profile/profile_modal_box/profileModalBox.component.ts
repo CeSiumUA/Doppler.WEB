@@ -5,7 +5,8 @@ import { UrlResolver } from '../../../environments/UrlResolver';
 import { DefaultImageType } from "src/environments/enums.helper";
 import { ProfileCardType } from '../../services/authentication/User';
 import { SecurePipe } from '../../services/communication/secure.pipe';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FileUploadType } from '../../../models/file.uploadtype';
 
 
 @Component({
@@ -32,6 +33,9 @@ export class ProfileModalBoxComponent implements OnInit{
         //return `url('${this.image}')`;
         return this.image;
     }
+    public set urlImage(value: string){
+
+    }
     public async addToContacts(): Promise<void>{
         await this.hubService.addToContacts(this.profileSettings.profileId)
                 .then(x => x);
@@ -55,10 +59,11 @@ export class ProfileModalBoxComponent implements OnInit{
                 const endpoint = UrlResolver.GetFileUploadUrl();
                 const formData = new FormData();
                 formData.append('files', firstFile, firstFile.name);
+                formData.append('uploadType', FileUploadType.ProfileImage.toString());
                 this.httpClient
                     .post(endpoint, formData)
                     .subscribe(result => {
-                        
+                        this.imageUrl = result.toString();
                     });
             }
         }

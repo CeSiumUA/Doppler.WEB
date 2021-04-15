@@ -51,6 +51,7 @@ var dialog_1 = require("@angular/material/dialog");
 var UrlResolver_1 = require("../../../environments/UrlResolver");
 var enums_helper_1 = require("src/environments/enums.helper");
 var User_1 = require("../../services/authentication/User");
+var file_uploadtype_1 = require("../../../models/file.uploadtype");
 var ProfileModalBoxComponent = /** @class */ (function () {
     function ProfileModalBoxComponent(profileSettings, hubService, httpClient) {
         this.profileSettings = profileSettings;
@@ -77,6 +78,8 @@ var ProfileModalBoxComponent = /** @class */ (function () {
         get: function () {
             //return `url('${this.image}')`;
             return this.image;
+        },
+        set: function (value) {
         },
         enumerable: false,
         configurable: true
@@ -122,6 +125,7 @@ var ProfileModalBoxComponent = /** @class */ (function () {
     ProfileModalBoxComponent.prototype.setActivePhoto = function (files) {
         return __awaiter(this, void 0, Promise, function () {
             var firstFile, endpoint, formData;
+            var _this = this;
             return __generator(this, function (_a) {
                 if (files !== null) {
                     firstFile = files.item(0);
@@ -129,9 +133,11 @@ var ProfileModalBoxComponent = /** @class */ (function () {
                         endpoint = UrlResolver_1.UrlResolver.GetFileUploadUrl();
                         formData = new FormData();
                         formData.append('files', firstFile, firstFile.name);
+                        formData.append('uploadType', file_uploadtype_1.FileUploadType.ProfileImage.toString());
                         this.httpClient
                             .post(endpoint, formData)
                             .subscribe(function (result) {
+                            _this.imageUrl = result.toString();
                         });
                     }
                 }
