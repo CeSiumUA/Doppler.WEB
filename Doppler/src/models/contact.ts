@@ -5,4 +5,5 @@ export interface Contact{
     iconUrl: string;
     description: string;
     likes: number;
+    userIcons: [];
 }

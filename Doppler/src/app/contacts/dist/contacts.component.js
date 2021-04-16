@@ -118,7 +118,7 @@ var ContactsComponent = /** @class */ (function () {
     };
     ContactsComponent.prototype.getImage = function (value, imageType) {
         if (imageType === void 0) { imageType = enums_helper_1.DefaultImageType.ProfilePictire; }
-        return UrlResolver_1.UrlResolver.GeImageUrl(value, imageType);
+        return UrlResolver_1.UrlResolver.GetImageUrl(value, imageType);
     };
     Object.defineProperty(ContactsComponent.prototype, "profileCardType", {
         get: function () {

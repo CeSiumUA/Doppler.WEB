@@ -21,7 +21,7 @@ export class ToolbarComponent{
     }
     public get iconUrl(): string{
         let imageGuid = this.authService.profilePicture;
-        return UrlResolver.GeImageUrl(imageGuid, DefaultImageType.ProfilePictire);
+        return UrlResolver.GetImageUrl(imageGuid, DefaultImageType.ProfilePictire);
     }
     constructor(private authService: AuthenticationService, private dialog: MatDialog, private router: Router){
 

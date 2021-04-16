@@ -59,7 +59,7 @@ export class ContactsComponent implements OnInit{
         });
     }
     public getImage(value: string, imageType: DefaultImageType = DefaultImageType.ProfilePictire): string{
-        return UrlResolver.GeImageUrl(value, imageType);
+        return UrlResolver.GetImageUrl(value, imageType);
     }
     public get profileCardType(): typeof ProfileCardType{
         return ProfileCardType;

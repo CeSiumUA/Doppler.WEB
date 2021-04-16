@@ -66,10 +66,13 @@ var ProfileModalBoxComponent = /** @class */ (function () {
         this.likes = 0;
         this.isLiked = false;
         this.likesLoading = true;
+        this.showOverlay = false;
+        this.activeOverlayPhoto = '';
+        this.imageCollection = [];
     }
     Object.defineProperty(ProfileModalBoxComponent.prototype, "image", {
         get: function () {
-            return UrlResolver_1.UrlResolver.GeImageUrl(this.imageUrl, enums_helper_1.DefaultImageType.ProfilePictire);
+            return UrlResolver_1.UrlResolver.GetImageUrl(this.imageUrl, enums_helper_1.DefaultImageType.ProfilePictire);
         },
         enumerable: false,
         configurable: true
@@ -100,6 +103,29 @@ var ProfileModalBoxComponent = /** @class */ (function () {
     ProfileModalBoxComponent.prototype.startChatting = function () {
         return __awaiter(this, void 0, Promise, function () {
             return __generator(this, function (_a) {
+                return [2 /*return*/];
+            });
+        });
+    };
+    Object.defineProperty(ProfileModalBoxComponent.prototype, "ActiveOverlayPhoto", {
+        get: function () {
+            return UrlResolver_1.UrlResolver.GetImageUrl(this.activeOverlayPhoto, enums_helper_1.DefaultImageType.ProfilePictire);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    ProfileModalBoxComponent.prototype.scaleImage = function () {
+        return __awaiter(this, void 0, Promise, function () {
+            return __generator(this, function (_a) {
+                this.showOverlay = true;
+                return [2 /*return*/];
+            });
+        });
+    };
+    ProfileModalBoxComponent.prototype.hideImage = function () {
+        return __awaiter(this, void 0, Promise, function () {
+            return __generator(this, function (_a) {
+                this.showOverlay = false;
                 return [2 /*return*/];
             });
         });
@@ -164,6 +190,8 @@ var ProfileModalBoxComponent = /** @class */ (function () {
                 _this.loading = false;
                 _this.description = response.contact.description;
                 _this.likes = response.contact.likes;
+                _this.imageCollection = response.contact.userIcons;
+                _this.activeOverlayPhoto = _this.imageCollection.filter(function (x) { return x.isActive; })[0].url;
                 if (_this.likes === 0) {
                     _this.likes = 'LIKE';
                 }
@@ -178,6 +206,8 @@ var ProfileModalBoxComponent = /** @class */ (function () {
                 _this.loading = false;
                 _this.description = response.description;
                 _this.likes = response.likes;
+                _this.imageCollection = response.userIcons;
+                _this.activeOverlayPhoto = _this.imageCollection.filter(function (x) { return x.isActive; })[0].url;
             });
         }
         this.hubService.CheckUserForLike(this.profileSettings.profileId)

@@ -8,7 +8,7 @@ var UrlResolver = /** @class */ (function () {
     UrlResolver.GetLoginUrl = function () {
         return environment_1.environment.apiUrl + "/api/authentication/authenticate";
     };
-    UrlResolver.GeImageUrl = function (imageValue, imageType) {
+    UrlResolver.GetImageUrl = function (imageValue, imageType) {
         if (imageValue) {
             return environment_1.environment.apiUrl + "/cdn/files/" + imageValue;
         }

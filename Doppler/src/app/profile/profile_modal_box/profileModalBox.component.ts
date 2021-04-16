@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, Inject, OnInit, Pipe } from '@angular/core';
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { HubService } from '../../services/communication/hub.service';
 import { UrlResolver } from '../../../environments/UrlResolver';
@@ -24,10 +24,13 @@ export class ProfileModalBoxComponent implements OnInit{
     public likes: string | number = 0;
     public isLiked: boolean = false;
     public likesLoading = true;
+    public showOverlay = false;
+    private activeOverlayPhoto: string = '';
+    public imageCollection: any[] = [];
     constructor(@Inject(MAT_DIALOG_DATA) public profileSettings: any, private hubService: HubService, private httpClient: HttpClient){
     }
     public get image(): string{
-        return UrlResolver.GeImageUrl(this.imageUrl, DefaultImageType.ProfilePictire);
+        return UrlResolver.GetImageUrl(this.imageUrl, DefaultImageType.ProfilePictire);
     }
     public get urlImage(): string{
         //return `url('${this.image}')`;
@@ -42,6 +45,15 @@ export class ProfileModalBoxComponent implements OnInit{
     }
     public async startChatting(): Promise<void>{
 
+    }
+    public get ActiveOverlayPhoto(): string{
+        return UrlResolver.GetImageUrl(this.activeOverlayPhoto, DefaultImageType.ProfilePictire);
+    }
+    public async scaleImage(): Promise<void>{
+        this.showOverlay = true;
+    }
+    public async hideImage(): Promise<void>{
+        this.showOverlay = false;
     }
     public async likeProfile(): Promise<void>{
         this.likesLoading = true;
@@ -82,6 +94,8 @@ export class ProfileModalBoxComponent implements OnInit{
                     this.loading = false;
                     this.description = response.contact.description;
                     this.likes = response.contact.likes;
+                    this.imageCollection = response.contact.userIcons;
+                    this.activeOverlayPhoto = this.imageCollection.filter(x => x.isActive)[0].url;
                     if(this.likes === 0){
                         this.likes = 'LIKE';
                     }
@@ -96,6 +110,8 @@ export class ProfileModalBoxComponent implements OnInit{
                     this.loading = false;
                     this.description = response.description;
                     this.likes = response.likes;
+                    this.imageCollection = response.userIcons;
+                    this.activeOverlayPhoto = this.imageCollection.filter(x => x.isActive)[0].url;
                 });
         }
         this.hubService.CheckUserForLike(this.profileSettings.profileId)

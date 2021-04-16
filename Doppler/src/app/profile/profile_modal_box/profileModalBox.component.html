@@ -8,7 +8,7 @@
             <mat-card-title>{{name}}</mat-card-title>
             <mat-card-subtitle>{{phoneNumber}}</mat-card-subtitle>
             </mat-card-header>
-            <img mat-card-image class="user-photo" [attr.src]="image | secure | async" alt="Photo of a User">
+            <img mat-card-image class="user-photo" (click)="scaleImage()" [attr.src]="image | secure | async" alt="Photo of a User">
             <mat-card-content>
             <p>
                 {{description}}
@@ -41,3 +41,6 @@
             </mat-card-actions>
     </div>
   </mat-card>
+  <div *ngIf="showOverlay" (click)="hideImage()" class="user-photo-overlay">
+    <img class="overlay-photo" [attr.src]="ActiveOverlayPhoto | secure | async" alt="Photo of a User">
+  </div>

@@ -6,7 +6,7 @@ export class UrlResolver{
     public static GetLoginUrl(): string{
         return `${environment.apiUrl}/api/authentication/authenticate`;
     }
-    public static GeImageUrl(imageValue: string | undefined, imageType: DefaultImageType): string{
+    public static GetImageUrl(imageValue: string | undefined, imageType: DefaultImageType): string{
         if(imageValue){
             return `${environment.apiUrl}/cdn/files/${imageValue}`
         }

@@ -35,7 +35,7 @@ var ToolbarComponent = /** @class */ (function () {
     Object.defineProperty(ToolbarComponent.prototype, "iconUrl", {
         get: function () {
             var imageGuid = this.authService.profilePicture;
-            return UrlResolver_1.UrlResolver.GeImageUrl(imageGuid, enums_helper_1.DefaultImageType.ProfilePictire);
+            return UrlResolver_1.UrlResolver.GetImageUrl(imageGuid, enums_helper_1.DefaultImageType.ProfilePictire);
         },
         enumerable: false,
         configurable: true
