@@ -25,7 +25,7 @@ export class ProfileModalBoxComponent implements OnInit{
     public isLiked: boolean = false;
     public likesLoading = true;
     public showOverlay = false;
-    private activeOverlayPhoto: string = '';
+    private activeOverlayPhoto = {url: '', isActive: false};
     public imageCollection: any[] = [];
     constructor(@Inject(MAT_DIALOG_DATA) public profileSettings: any, private hubService: HubService, private httpClient: HttpClient){
     }
@@ -44,10 +44,13 @@ export class ProfileModalBoxComponent implements OnInit{
                 .then(x => x);
     }
     public async startChatting(): Promise<void>{
-
+        await this.hubService.GetDialogueInstanceId(this.profileSettings.profileId)
+                .then(x => {
+                    
+                });
     }
     public get ActiveOverlayPhoto(): string{
-        return UrlResolver.GetImageUrl(this.activeOverlayPhoto, DefaultImageType.ProfilePictire);
+        return UrlResolver.GetImageUrl(this.activeOverlayPhoto.url, DefaultImageType.ProfilePictire);
     }
     public async scaleImage(): Promise<void>{
         this.showOverlay = true;
@@ -83,6 +86,18 @@ export class ProfileModalBoxComponent implements OnInit{
     public get profileCardType(): typeof ProfileCardType{
         return ProfileCardType;
     }
+    public showPreviousImage(): void{
+        const currentIndex = this.imageCollection.indexOf(this.activeOverlayPhoto) + 1;
+        if(currentIndex > 0 && currentIndex < this.imageCollection.length){
+            this.activeOverlayPhoto = this.imageCollection[currentIndex];
+        }
+    }
+    public showNextImage(): void{
+        const currentIndex = this.imageCollection.indexOf(this.activeOverlayPhoto) - 1;
+        if(currentIndex >= 0 && currentIndex < this.imageCollection.length){
+            this.activeOverlayPhoto = this.imageCollection[currentIndex];
+        }
+    }
     ngOnInit(): void{
         this.loading = true;
         if (this.profileSettings.profileCardType === ProfileCardType.MyContactProfile){
@@ -95,7 +110,7 @@ export class ProfileModalBoxComponent implements OnInit{
                     this.description = response.contact.description;
                     this.likes = response.contact.likes;
                     this.imageCollection = response.contact.userIcons;
-                    this.activeOverlayPhoto = this.imageCollection.filter(x => x.isActive)[0].url;
+                    this.activeOverlayPhoto = this.imageCollection.filter(x => x.isActive)[0];
                     if(this.likes === 0){
                         this.likes = 'LIKE';
                     }
@@ -111,7 +126,7 @@ export class ProfileModalBoxComponent implements OnInit{
                     this.description = response.description;
                     this.likes = response.likes;
                     this.imageCollection = response.userIcons;
-                    this.activeOverlayPhoto = this.imageCollection.filter(x => x.isActive)[0].url;
+                    this.activeOverlayPhoto = this.imageCollection.filter(x => x.isActive)[0];
                 });
         }
         this.hubService.CheckUserForLike(this.profileSettings.profileId)

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Pipe } from '@angular/core';
 import * as signalR from "@microsoft/signalr";
 import { environment } from "src/environments/environment";
 import { Contact } from "src/models/contact";
@@ -54,5 +54,9 @@ export class HubService{
     public async CheckUserForLike(login: string): Promise<boolean>{
         await this.startConnection();
         return await this.connection.invoke('CheckUserForLike', login);
+    }
+    public async GetDialogueInstanceId(login: string): Promise<string>{
+        await this.startConnection();
+        return await this.connection.invoke('GetDialogueInstanceId', login);
     }
 }

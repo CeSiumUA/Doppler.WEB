@@ -41,6 +41,12 @@
             </mat-card-actions>
     </div>
   </mat-card>
-  <div *ngIf="showOverlay" (click)="hideImage()" class="user-photo-overlay">
-    <img class="overlay-photo" [attr.src]="ActiveOverlayPhoto | secure | async" alt="Photo of a User">
+  <div *ngIf="showOverlay" class="user-photo-overlay">
+    <div>
+        <button class="shadow-button left-shadow-button" (click)="showNextImage()"><</button>
+        <button class="shadow-button right-shadow-button" (click)="showPreviousImage()">></button>
+    </div>
+    <div class="overlay-photo-container" (click)="hideImage()">
+        <img class="overlay-photo" [attr.src]="ActiveOverlayPhoto | secure | async" alt="Photo of a User">
+    </div>
   </div>

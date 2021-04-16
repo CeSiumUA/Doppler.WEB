@@ -29,8 +29,25 @@
     max-height: 640px;
     margin: auto;
     display: block;
+}
+
+.overlay-photo-container {
+    margin: auto;
+    display: block;
     position: relative;
     top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
+}
+//TODO
+.shadow-button{
+    cursor: pointer;
+}
+
+.left-shadow-button{
+    float: left;
+}
+
+.right-shadow-button{
+    float: right;
 }
