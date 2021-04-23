@@ -41,6 +41,6 @@ export class ToolbarComponent{
         this.router.navigateByUrl('/contacts');
     }
     public goToChats(): void{
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/chats');
     }
 }

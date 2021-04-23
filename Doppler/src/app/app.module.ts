@@ -16,6 +16,7 @@ import { ProfileModalBoxComponent } from './profile/profile_modal_box/profileMod
 import { ContactsComponent } from './contacts/contacts.component';
 import { AuthInterceptor } from './services/communication/auth.interceptor';
 import { SecurePipe } from './services/communication/secure.pipe';
+import { ChatsComponent } from './chats/chats.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { SecurePipe } from './services/communication/secure.pipe';
     ProfileModalBoxComponent,
     ContactsComponent,
     SecurePipe,
+    ChatsComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,7 @@
+<mat-list>
+    <div mat-subheader>Chats</div>
+    <mat-list-item *ngFor="let chat of chats" class="chat">
+        <img matListAvatar [src]="getImageURL(chat.iconUrl) | secure | async">
+        <div mat-line>{{chat.name}}</div>
+    </mat-list-item>
+</mat-list>

@@ -6,6 +6,7 @@ import { AuthenticationService } from '../authentication/authentication.service'
 import { Observable } from 'rxjs';
 import { User, UserContact } from '../authentication/User';
 import { LikeResult } from '../../../models/LikeResult';
+import { Conversation } from 'src/models/Conversation';
 
 @Injectable({
     providedIn: 'root'
@@ -58,5 +59,9 @@ export class HubService{
     public async GetDialogueInstanceId(login: string): Promise<string>{
         await this.startConnection();
         return await this.connection.invoke('GetDialogueInstanceId', login);
+    }
+    public async GetUserConversations(skip: number | null = 0, take: number | null = null): Promise<Conversation[]>{
+        await this.startConnection();
+        return await this.connection.invoke('GetUserConversations', skip, take);
     }
 }

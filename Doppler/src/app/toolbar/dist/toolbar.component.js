@@ -55,7 +55,7 @@ var ToolbarComponent = /** @class */ (function () {
         this.router.navigateByUrl('/contacts');
     };
     ToolbarComponent.prototype.goToChats = function () {
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/chats');
     };
     ToolbarComponent = __decorate([
         core_1.Component({

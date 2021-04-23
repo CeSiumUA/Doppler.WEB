@@ -24,6 +24,7 @@ var profileModalBox_component_1 = require("./profile/profile_modal_box/profileMo
 var contacts_component_1 = require("./contacts/contacts.component");
 var auth_interceptor_1 = require("./services/communication/auth.interceptor");
 var secure_pipe_1 = require("./services/communication/secure.pipe");
+var chats_component_1 = require("./chats/chats.component");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -37,6 +38,7 @@ var AppModule = /** @class */ (function () {
                 profileModalBox_component_1.ProfileModalBoxComponent,
                 contacts_component_1.ContactsComponent,
                 secure_pipe_1.SecurePipe,
+                chats_component_1.ChatsComponent,
             ],
             imports: [
                 platform_browser_1.BrowserModule,
