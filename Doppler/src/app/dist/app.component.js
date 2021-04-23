@@ -45,9 +45,10 @@ exports.__esModule = true;
 exports.AppComponent = void 0;
 var core_1 = require("@angular/core");
 var AppComponent = /** @class */ (function () {
-    function AppComponent(router, changeDetectorRef, media, hubService) {
+    function AppComponent(router, changeDetectorRef, media, hubService, componentsService) {
         this.router = router;
         this.hubService = hubService;
+        this.componentsService = componentsService;
         this.title = 'Doppler';
         this.mobileQuery = media.matchMedia('(max-width: 600px)');
         this._mobileQueryListener = function () { return changeDetectorRef.detectChanges(); };
@@ -55,6 +56,9 @@ var AppComponent = /** @class */ (function () {
     }
     AppComponent.prototype.goHome = function () {
         return this.router.navigateByUrl('/');
+    };
+    AppComponent.prototype.toggleSidenav = function (sidenav) {
+        sidenav.toggle();
     };
     AppComponent.prototype.ngOnDestroy = function () {
         this.mobileQuery.removeListener(this._mobileQueryListener);

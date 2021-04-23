@@ -8,15 +8,48 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 exports.__esModule = true;
 exports.ChatComponent = void 0;
 var core_1 = require("@angular/core");
+var UrlResolver_1 = require("../../environments/UrlResolver");
+var enums_helper_1 = require("src/environments/enums.helper");
 var ChatComponent = /** @class */ (function () {
-    function ChatComponent(hubService, activateRoute) {
+    function ChatComponent(hubService, activateRoute, componentsService) {
         this.hubService = hubService;
         this.activateRoute = activateRoute;
-        this.id = '';
+        this.componentsService = componentsService;
+        this.messages = [];
+        this.newMessage = '';
     }
+    Object.defineProperty(ChatComponent.prototype, "profileImageUrl", {
+        get: function () {
+            var _a;
+            return UrlResolver_1.UrlResolver.GetImageUrl((_a = this.selectedConversation) === null || _a === void 0 ? void 0 : _a.iconUrl, enums_helper_1.DefaultImageType.ProfilePictire);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(ChatComponent.prototype, "selectedConversation", {
+        get: function () {
+            var _a;
+            return (_a = this.componentsService) === null || _a === void 0 ? void 0 : _a.selectedChat;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(ChatComponent.prototype, "lastSeen", {
+        get: function () {
+            return 'Online - Yesterday';
+        },
+        enumerable: false,
+        configurable: true
+    });
     ChatComponent.prototype.ngOnInit = function () {
-        this.activateRoute.params.subscribe(function (params) {
-        });
+        var _this = this;
+        var _a;
+        if ((_a = this.selectedConversation) === null || _a === void 0 ? void 0 : _a.id) {
+            this.hubService.GetChatMessages(this.selectedConversation.id, 0)
+                .then(function (messagesList) {
+                _this.messages = messagesList;
+            });
+        }
     };
     ChatComponent = __decorate([
         core_1.Component({

@@ -20,7 +20,7 @@
 
 <div class="app-container" [class.app-is-mobile]="mobileQuery.matches">
     <mat-toolbar class="app-toolbar">
-      <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+      <button mat-icon-button (click)="toggleSidenav(snav)"><mat-icon>menu</mat-icon></button>
       <h1>{{title}}</h1>
     </mat-toolbar>
   

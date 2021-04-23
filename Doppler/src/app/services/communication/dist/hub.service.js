@@ -200,7 +200,7 @@ var HubService = /** @class */ (function () {
     };
     HubService.prototype.GetChatMessages = function (chatId, skip, take) {
         if (skip === void 0) { skip = 0; }
-        if (take === void 0) { take = null; }
+        if (take === void 0) { take = 25; }
         return __awaiter(this, void 0, Promise, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {

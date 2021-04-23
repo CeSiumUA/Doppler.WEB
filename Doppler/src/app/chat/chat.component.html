@@ -1,0 +1,21 @@
+<div style="height: 100%;">
+    <mat-card>
+        <mat-card-header>
+            <img mat-card-avatar [src]="profileImageUrl | secure | async">
+            <mat-card-title>{{selectedConversation?.name}}</mat-card-title>
+            <mat-card-subtitle>{{lastSeen}}</mat-card-subtitle>
+        </mat-card-header>
+    </mat-card>
+
+    <mat-card class="send-message-input">
+        <div style="width: 100%;">
+            <mat-form-field style="width: 85%; margin-left: 10px;">
+                <mat-label>Your message to {{selectedConversation?.name}}</mat-label>
+                <textarea matInput [(ngModel)]="newMessage"></textarea>
+            </mat-form-field>
+            <button mat-icon-button>
+                <mat-icon>send</mat-icon>
+            </button>
+        </div>
+    </mat-card>
+</div>

@@ -17,6 +17,7 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { AuthInterceptor } from './services/communication/auth.interceptor';
 import { SecurePipe } from './services/communication/secure.pipe';
 import { ChatsComponent } from './chats/chats.component';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ChatsComponent } from './chats/chats.component';
     ContactsComponent,
     SecurePipe,
     ChatsComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,

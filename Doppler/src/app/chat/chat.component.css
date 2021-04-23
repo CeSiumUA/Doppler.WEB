@@ -1,0 +1,6 @@
+.send-message-input {
+    position: relative;
+    bottom: 0px;
+    top: 100%;
+    transform: translateY(-210%);
+}

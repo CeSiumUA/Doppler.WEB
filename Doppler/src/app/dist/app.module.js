@@ -25,6 +25,7 @@ var contacts_component_1 = require("./contacts/contacts.component");
 var auth_interceptor_1 = require("./services/communication/auth.interceptor");
 var secure_pipe_1 = require("./services/communication/secure.pipe");
 var chats_component_1 = require("./chats/chats.component");
+var chat_component_1 = require("./chat/chat.component");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -39,6 +40,7 @@ var AppModule = /** @class */ (function () {
                 contacts_component_1.ContactsComponent,
                 secure_pipe_1.SecurePipe,
                 chats_component_1.ChatsComponent,
+                chat_component_1.ChatComponent
             ],
             imports: [
                 platform_browser_1.BrowserModule,
