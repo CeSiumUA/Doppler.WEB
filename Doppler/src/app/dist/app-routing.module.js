@@ -14,11 +14,13 @@ var home_component_1 = require("./home/home.component");
 var auth_guard_1 = require("./services/authentication/auth.guard");
 var contacts_component_1 = require("./contacts/contacts.component");
 var chats_component_1 = require("./chats/chats.component");
+var chat_component_1 = require("./chat/chat.component");
 var routes = [
     { path: '', component: home_component_1.HomeComponent, canActivate: [auth_guard_1.AuthGuard] },
     { path: 'login', component: login_component_1.LoginComponent },
     { path: 'contacts', component: contacts_component_1.ContactsComponent, canActivate: [auth_guard_1.AuthGuard] },
     { path: 'chats', component: chats_component_1.ChatsComponent, canActivate: [auth_guard_1.AuthGuard] },
+    { path: 'chat/:id', component: chat_component_1.ChatComponent, canActivate: [auth_guard_1.AuthGuard] },
     { path: '**', component: home_component_1.HomeComponent, canActivate: [auth_guard_1.AuthGuard] },
 ];
 var AppRoutingModule = /** @class */ (function () {

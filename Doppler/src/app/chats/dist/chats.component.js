@@ -47,10 +47,14 @@ var core_1 = require("@angular/core");
 var UrlResolver_1 = require("../../environments/UrlResolver");
 var enums_helper_1 = require("src/environments/enums.helper");
 var ChatsComponent = /** @class */ (function () {
-    function ChatsComponent(hubService) {
+    function ChatsComponent(hubService, router) {
         this.hubService = hubService;
+        this.router = router;
         this.chats = [];
     }
+    ChatsComponent.prototype.goToProfile = function (chat) {
+        this.router.navigateByUrl("/chat/" + chat.id);
+    };
     ChatsComponent.prototype.getImageURL = function (url) {
         return UrlResolver_1.UrlResolver.GetImageUrl(url, enums_helper_1.DefaultImageType.ChatPicture);
     };

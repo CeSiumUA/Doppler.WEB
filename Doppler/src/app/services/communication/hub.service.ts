@@ -64,4 +64,8 @@ export class HubService{
         await this.startConnection();
         return await this.connection.invoke('GetUserConversations', skip, take);
     }
+    public async GetChatMessages(chatId: string, skip: number | null = 0, take: number | null = null): Promise<any[]>{
+        await this.startConnection();
+        return await this.connection.invoke('GetConversationMessages', chatId, skip, take);
+    }
 }
