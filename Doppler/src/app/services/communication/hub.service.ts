@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { User, UserContact } from '../authentication/User';
 import { LikeResult } from '../../../models/LikeResult';
 import { Conversation } from 'src/models/Conversation';
-import { Message } from '../../../models/Message';
+import { ConversationMessage, WriteMessageResult } from '../../../models/Message';
 
 @Injectable({
     providedIn: 'root'
@@ -65,8 +65,12 @@ export class HubService{
         await this.startConnection();
         return await this.connection.invoke('GetUserConversations', skip, take);
     }
-    public async GetChatMessages(chatId: string | undefined, skip: number | null = 0, take: number | null = 25): Promise<Message[]>{
+    public async GetChatMessages(chatId: string | undefined, skip: number | null = 0, take: number | null = 25): Promise<ConversationMessage[]>{
         await this.startConnection();
         return await this.connection.invoke('GetConversationMessages', chatId, skip, take);
+    }
+    public async WriteMessageToChat(chatId: string, message: ConversationMessage): Promise<WriteMessageResult>{
+        await this.startConnection();
+        return await this.connection.invoke('WriteMessageToChat', chatId, message);
     }
 }

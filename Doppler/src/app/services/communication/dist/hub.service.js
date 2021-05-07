@@ -213,6 +213,19 @@ var HubService = /** @class */ (function () {
             });
         });
     };
+    HubService.prototype.WriteMessageToChat = function (chatId, message) {
+        return __awaiter(this, void 0, Promise, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.startConnection()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.connection.invoke('WriteMessageToChat', chatId, message)];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
     HubService = __decorate([
         core_1.Injectable({
             providedIn: 'root'

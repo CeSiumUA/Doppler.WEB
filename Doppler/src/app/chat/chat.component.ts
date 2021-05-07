@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HubService } from '../services/communication/hub.service';
-import { Message } from '../../models/Message';
+import { ConversationMessage } from '../../models/Message';
 import { ComponentsService } from '../services/utils/components.service';
 import { Conversation } from '../../models/Conversation';
 import { UrlResolver } from '../../environments/UrlResolver';
@@ -13,7 +13,7 @@ import { DefaultImageType } from 'src/environments/enums.helper';
     styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit{
-    public messages: Message[] = [];
+    public messages: ConversationMessage[] = [];
     public newMessage: string = '';
     constructor(private hubService: HubService, private activateRoute: ActivatedRoute, private componentsService: ComponentsService){
         
@@ -27,8 +27,25 @@ export class ChatComponent implements OnInit{
     public get lastSeen(): string{
         return 'Online - Yesterday';
     }
+    public async sendMessage(): Promise<void>{
+        const conversationMessage: ConversationMessage = {
+            clientGeneratedId: this.componentsService.generateGuid(),
+            deleted: false,
+            content: {
+                text: this.newMessage,
+                mediaContents: undefined
+            }
+        }
+        if(this.selectedConversation.id){
+            await this.hubService.WriteMessageToChat(this.selectedConversation.id, conversationMessage)
+                .then(result => {
+
+                });
+            this.newMessage = '';
+        }
+    }
     ngOnInit(): void{
-        if(this.selectedConversation?.id){
+        if (this.selectedConversation?.id){
             this.hubService.GetChatMessages(this.selectedConversation.id, 0)
                 .then(messagesList => {
                     this.messages = messagesList;
