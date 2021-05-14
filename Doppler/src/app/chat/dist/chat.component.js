@@ -47,12 +47,14 @@ var core_1 = require("@angular/core");
 var UrlResolver_1 = require("../../environments/UrlResolver");
 var enums_helper_1 = require("src/environments/enums.helper");
 var ChatComponent = /** @class */ (function () {
-    function ChatComponent(hubService, activateRoute, componentsService) {
+    function ChatComponent(hubService, activatedRoute, componentsService) {
+        var _a;
         this.hubService = hubService;
-        this.activateRoute = activateRoute;
+        this.activatedRoute = activatedRoute;
         this.componentsService = componentsService;
         this.messages = [];
         this.newMessage = '';
+        this._selectedConversation = (_a = this.componentsService) === null || _a === void 0 ? void 0 : _a.selectedChat;
     }
     Object.defineProperty(ChatComponent.prototype, "profileImageUrl", {
         get: function () {
@@ -64,8 +66,7 @@ var ChatComponent = /** @class */ (function () {
     });
     Object.defineProperty(ChatComponent.prototype, "selectedConversation", {
         get: function () {
-            var _a;
-            return (_a = this.componentsService) === null || _a === void 0 ? void 0 : _a.selectedChat;
+            return this._selectedConversation;
         },
         enumerable: false,
         configurable: true
@@ -104,15 +105,50 @@ var ChatComponent = /** @class */ (function () {
             });
         });
     };
-    ChatComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        var _a;
-        if ((_a = this.selectedConversation) === null || _a === void 0 ? void 0 : _a.id) {
-            this.hubService.GetChatMessages(this.selectedConversation.id, 0)
-                .then(function (messagesList) {
-                _this.messages = messagesList;
+    ChatComponent.prototype.loadMessages = function () {
+        return __awaiter(this, void 0, Promise, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.hubService.GetChatMessages(this.selectedConversation.id, 0)
+                            .then(function (messagesList) {
+                            _this.messages = messagesList;
+                        })];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
             });
-        }
+        });
+    };
+    ChatComponent.prototype.ngOnInit = function () {
+        return __awaiter(this, void 0, Promise, function () {
+            var conversationId;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!!this.selectedConversation) return [3 /*break*/, 2];
+                        conversationId = this.activatedRoute.snapshot.params['id'];
+                        return [4 /*yield*/, this.hubService.GetUserConversation(conversationId).then(function (result) { return __awaiter(_this, void 0, void 0, function () {
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            this._selectedConversation = result;
+                                            return [4 /*yield*/, this.loadMessages()];
+                                        case 1: return [2 /*return*/, _a.sent()];
+                                    }
+                                });
+                            }); })];
+                    case 1:
+                        _a.sent();
+                        return [3 /*break*/, 4];
+                    case 2: return [4 /*yield*/, this.loadMessages()];
+                    case 3:
+                        _a.sent();
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
     };
     ChatComponent = __decorate([
         core_1.Component({

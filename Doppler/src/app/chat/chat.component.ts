@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HubService } from '../services/communication/hub.service';
 import { ConversationMessage } from '../../models/Message';
 import { ComponentsService } from '../services/utils/components.service';
@@ -15,14 +15,15 @@ import { DefaultImageType } from 'src/environments/enums.helper';
 export class ChatComponent implements OnInit{
     public messages: ConversationMessage[] = [];
     public newMessage: string = '';
-    constructor(private hubService: HubService, private activateRoute: ActivatedRoute, private componentsService: ComponentsService){
+    private _selectedConversation: Conversation = this.componentsService?.selectedChat;
+    constructor(private hubService: HubService, private activatedRoute: ActivatedRoute, private componentsService: ComponentsService){
         
     }
     public get profileImageUrl(): string{
         return UrlResolver.GetImageUrl(this.selectedConversation?.iconUrl, DefaultImageType.ProfilePictire);
     }
     public get selectedConversation(): Conversation{
-        return this.componentsService?.selectedChat;
+        return this._selectedConversation;
     }
     public get lastSeen(): string{
         return 'Online - Yesterday';
@@ -44,12 +45,21 @@ export class ChatComponent implements OnInit{
             this.newMessage = '';
         }
     }
-    ngOnInit(): void{
-        if (this.selectedConversation?.id){
-            this.hubService.GetChatMessages(this.selectedConversation.id, 0)
+    private async loadMessages(): Promise<void>{
+        return await this.hubService.GetChatMessages(this.selectedConversation.id, 0)
                 .then(messagesList => {
                     this.messages = messagesList;
                 });
+    }
+    async ngOnInit(): Promise<void>{
+        if(!this.selectedConversation){
+            const conversationId = this.activatedRoute.snapshot.params['id'];
+            await this.hubService.GetUserConversation(conversationId).then(async result => {
+                this._selectedConversation = result;
+                return await this.loadMessages();
+            })
+        }else{
+            await this.loadMessages();
         }
     }
 }

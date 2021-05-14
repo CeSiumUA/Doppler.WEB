@@ -73,4 +73,8 @@ export class HubService{
         await this.startConnection();
         return await this.connection.invoke('WriteMessageToChat', chatId, message);
     }
+    public async GetUserConversation(conversationId: string): Promise<Conversation>{
+        await this.startConnection();
+        return await this.connection.invoke('GetUserConversation', conversationId);
+    }
 }

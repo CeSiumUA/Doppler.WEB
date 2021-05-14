@@ -1,6 +1,25 @@
 .send-message-input {
+    
+}
+
+.chat-area{
+    
+}
+
+.chat-input {
+    position: absolute;
+    width: 100%;
+    margin-right: 20px;
+    bottom: 0%;
+}
+
+.chat-input-field {
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.chat-send-button {
+    margin-right: 10px;
     position: relative;
-    bottom: 0px;
-    top: 100%;
-    transform: translateY(-210%);
+    margin-left: 10px;
 }
