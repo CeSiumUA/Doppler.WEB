@@ -55,6 +55,7 @@ var ChatComponent = /** @class */ (function () {
         this.messages = [];
         this.newMessage = '';
         this._selectedConversation = (_a = this.componentsService) === null || _a === void 0 ? void 0 : _a.selectedChat;
+        this.lastInputTime = new Date().getTime();
     }
     Object.defineProperty(ChatComponent.prototype, "profileImageUrl", {
         get: function () {
@@ -118,6 +119,11 @@ var ChatComponent = /** @class */ (function () {
                 }
             });
         });
+    };
+    ChatComponent.prototype.handleInput = function (event) {
+        var secondsSpan = Date.now() - this.lastInputTime;
+        this.lastInputTime = Date.now();
+        debugger;
     };
     ChatComponent.prototype.ngOnInit = function () {
         return __awaiter(this, void 0, Promise, function () {

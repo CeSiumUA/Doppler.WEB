@@ -8,14 +8,16 @@
     </mat-card>
     <div class="chat-area">
         <div *ngFor="let message of messages">
-            <p>{{message?.content?.text}}</p>
+            <div class="message-box">
+                <p>{{message?.content?.text}}</p>
+            </div>
         </div>
     </div>
     <div class="chat-input">
         <div class="chat-input-field">
             <mat-form-field style="width: 100%">
                 <mat-label>Your message to {{selectedConversation?.name}}</mat-label>
-                <textarea matInput [(ngModel)]="newMessage"></textarea>
+                <textarea matInput (ngModelChange)="handleInput($event)" [(ngModel)]="newMessage"></textarea>
             </mat-form-field>
         </div>
         <div class="chat-send-button">

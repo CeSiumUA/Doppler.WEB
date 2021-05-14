@@ -77,4 +77,8 @@ export class HubService{
         await this.startConnection();
         return await this.connection.invoke('GetUserConversation', conversationId);
     }
+    public async SendTypingSignal(conversationId: string): Promise<void>{
+        await this.startConnection();
+        return await this.connection.invoke('HandleTyping', conversationId);
+    }
 }

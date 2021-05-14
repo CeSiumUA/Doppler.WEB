@@ -23,3 +23,10 @@
     position: relative;
     margin-left: 10px;
 }
+
+.message-box {
+    background-color: #424242;
+    width: auto;
+    display: inline-block;
+    max-width: 40%;
+}

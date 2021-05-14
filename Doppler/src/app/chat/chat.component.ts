@@ -16,6 +16,7 @@ export class ChatComponent implements OnInit{
     public messages: ConversationMessage[] = [];
     public newMessage: string = '';
     private _selectedConversation: Conversation = this.componentsService?.selectedChat;
+    private lastInputTime = new Date().getTime();
     constructor(private hubService: HubService, private activatedRoute: ActivatedRoute, private componentsService: ComponentsService){
         
     }
@@ -50,6 +51,11 @@ export class ChatComponent implements OnInit{
                 .then(messagesList => {
                     this.messages = messagesList;
                 });
+    }
+    public handleInput(event: any): void{
+        const secondsSpan = Date.now() - this.lastInputTime;
+        this.lastInputTime = Date.now();
+        debugger;
     }
     async ngOnInit(): Promise<void>{
         if(!this.selectedConversation){
