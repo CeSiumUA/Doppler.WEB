@@ -53,6 +53,7 @@ var ChatComponent = /** @class */ (function () {
         this.activatedRoute = activatedRoute;
         this.componentsService = componentsService;
         this.messages = [];
+        this.conversationMembers = [];
         this.newMessage = '';
         this._selectedConversation = (_a = this.componentsService) === null || _a === void 0 ? void 0 : _a.selectedChat;
         this.lastInputTime = new Date().getTime();
@@ -111,19 +112,47 @@ var ChatComponent = /** @class */ (function () {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.hubService.GetChatMessages(this.selectedConversation.id, 0)
-                            .then(function (messagesList) {
-                            _this.messages = messagesList;
-                        })];
+                    case 0:
+                        this.subscribeForTyping();
+                        return [4 /*yield*/, this.hubService.GetChatMessages(this.selectedConversation.id, 0)
+                                .then(function (messagesList) {
+                                _this.messages = messagesList;
+                            })];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
+    ChatComponent.prototype.subscribeForTyping = function () {
+        this.hubService.SubscribeToMethod('HandleChatTyping', function (chatId, typerNumber) {
+        });
+    };
     ChatComponent.prototype.handleInput = function (event) {
-        var secondsSpan = Date.now() - this.lastInputTime;
-        this.lastInputTime = Date.now();
-        debugger;
+        var _a, _b;
+        return __awaiter(this, void 0, Promise, function () {
+            var secondsSpan;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        secondsSpan = Date.now() - this.lastInputTime;
+                        if (!(secondsSpan > 3000)) return [3 /*break*/, 2];
+                        if (!((_a = this.selectedConversation) === null || _a === void 0 ? void 0 : _a.id)) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this.hubService.SendTypingSignal((_b = this.selectedConversation) === null || _b === void 0 ? void 0 : _b.id).then(function (result) { return result; })];
+                    case 1:
+                        _c.sent();
+                        this.lastInputTime = Date.now();
+                        _c.label = 2;
+                    case 2: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ChatComponent.prototype.loadConversationMembers = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/];
+            });
+        });
     };
     ChatComponent.prototype.ngOnInit = function () {
         return __awaiter(this, void 0, Promise, function () {
@@ -133,7 +162,7 @@ var ChatComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         if (!!this.selectedConversation) return [3 /*break*/, 2];
-                        conversationId = this.activatedRoute.snapshot.params['id'];
+                        conversationId = this.activatedRoute.snapshot.params.id;
                         return [4 /*yield*/, this.hubService.GetUserConversation(conversationId).then(function (result) { return __awaiter(_this, void 0, void 0, function () {
                                 return __generator(this, function (_a) {
                                     switch (_a.label) {
@@ -148,9 +177,7 @@ var ChatComponent = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 4];
                     case 2: return [4 /*yield*/, this.loadMessages()];
-                    case 3:
-                        _a.sent();
-                        _a.label = 4;
+                    case 3: return [2 /*return*/, _a.sent()];
                     case 4: return [2 /*return*/];
                 }
             });

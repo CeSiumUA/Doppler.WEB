@@ -6,6 +6,7 @@ import { ComponentsService } from '../services/utils/components.service';
 import { Conversation } from '../../models/Conversation';
 import { UrlResolver } from '../../environments/UrlResolver';
 import { DefaultImageType } from 'src/environments/enums.helper';
+import { Contact } from '../../models/contact';
 
 @Component({
     selector: 'app-chat',
@@ -14,6 +15,7 @@ import { DefaultImageType } from 'src/environments/enums.helper';
 })
 export class ChatComponent implements OnInit{
     public messages: ConversationMessage[] = [];
+    public conversationMembers: Contact[] = [];
     public newMessage: string = '';
     private _selectedConversation: Conversation = this.componentsService?.selectedChat;
     private lastInputTime = new Date().getTime();
@@ -47,25 +49,38 @@ export class ChatComponent implements OnInit{
         }
     }
     private async loadMessages(): Promise<void>{
+        this.subscribeForTyping();
         return await this.hubService.GetChatMessages(this.selectedConversation.id, 0)
                 .then(messagesList => {
                     this.messages = messagesList;
                 });
     }
-    public handleInput(event: any): void{
+    private subscribeForTyping() {
+        this.hubService.SubscribeToMethod('HandleChatTyping', (chatId: string, typerNumber: string) => {
+
+        });
+    }
+    public async handleInput(event: any): Promise<void>{
         const secondsSpan = Date.now() - this.lastInputTime;
-        this.lastInputTime = Date.now();
-        debugger;
+        if(secondsSpan > 3000){
+            if(this.selectedConversation?.id){
+                await this.hubService.SendTypingSignal(this.selectedConversation?.id).then(result => result);
+                this.lastInputTime = Date.now();
+            }
+        }
+    }
+    private async loadConversationMembers() {
+        
     }
     async ngOnInit(): Promise<void>{
         if(!this.selectedConversation){
-            const conversationId = this.activatedRoute.snapshot.params['id'];
+            const conversationId = this.activatedRoute.snapshot.params.id;
             await this.hubService.GetUserConversation(conversationId).then(async result => {
                 this._selectedConversation = result;
                 return await this.loadMessages();
-            })
+            });
         }else{
-            await this.loadMessages();
+            return await this.loadMessages();
         }
     }
 }

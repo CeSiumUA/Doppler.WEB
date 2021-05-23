@@ -81,4 +81,10 @@ export class HubService{
         await this.startConnection();
         return await this.connection.invoke('HandleTyping', conversationId);
     }
+    public SubscribeToMethod(methodName: string, callBack: (...args: any[]) => void){
+        this.connection.on('HandleChatTyping', callBack);
+    }
+    public UnsubscribeFromMethod(methodName: string){
+        this.connection.off(methodName);
+    }
 }

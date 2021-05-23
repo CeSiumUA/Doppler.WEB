@@ -252,6 +252,12 @@ var HubService = /** @class */ (function () {
             });
         });
     };
+    HubService.prototype.SubscribeToMethod = function (methodName, callBack) {
+        this.connection.on('HandleChatTyping', callBack);
+    };
+    HubService.prototype.UnsubscribeFromMethod = function (methodName) {
+        this.connection.off(methodName);
+    };
     HubService = __decorate([
         core_1.Injectable({
             providedIn: 'root'
