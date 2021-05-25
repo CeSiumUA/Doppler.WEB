@@ -14,4 +14,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Slug
-      - run: echo Hello, world!
+        run: echo Hello, world!
