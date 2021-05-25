@@ -13,15 +13,5 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Install
-        run: npm install
-
-      - name: Build production
-        run: npm run build
-      - name: Push to FireBase hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.SWaver_workflow_token }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_DOPPLER_38F1D }}'
-          channelId: live
-          projectId: doppler-38f1d
+      - name: Slug
+      - run: echo Hello, world!
