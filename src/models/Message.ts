@@ -1,8 +1,21 @@
+import { User } from 'src/app/services/authentication/User';
+
 export interface ConversationMessage{
     id?: string;
     clientGeneratedId?: string;
     deleted?: boolean;
-    content?: ConversationMessageContent
+    content?: ConversationMessageContent;
+    sender?: ConversationMember;
+}
+
+export interface ConversationMember{
+    id?: number;
+    conversationId?: string;
+    displayName?: string;
+    role?: number;
+    userId: number;
+    color: string;
+    user: User;
 }
 
 export interface ConversationMessageContent{

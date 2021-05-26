@@ -9,9 +9,16 @@
         </mat-card>
     </div>
     <div class="chat-area">
-        <div *ngFor="let message of messages" class="message-box">
+        <!-- <div *ngFor="let message of messages" class="message-box">
             <p>{{message?.content?.text}}</p>
-        </div>
+        </div> -->
+        <mat-card *ngFor="let message of messages" class="message-box">
+            <mat-card-header>
+                <img class="profile-image" mat-card-avatar [src]="getIconUrl(message.sender?.user?.iconUrl) | secure | async" (click)="showProfile()"/>
+                <mat-card-title class="chat-sender-name" [style]="getUserNameColor(message)">{{message.sender?.displayName}}</mat-card-title>
+                <mat-card-subtitle>{{message.content?.text}}</mat-card-subtitle>
+            </mat-card-header>
+        </mat-card>
     </div>
     <div class="chat-input">
         <div class="chat-input-field">
