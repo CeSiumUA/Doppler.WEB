@@ -20,6 +20,7 @@ export class ChatComponent implements OnInit{
     public messages: ConversationMessage[] = [];
     public conversationMembers: Contact[] = [];
     public newMessage: string = '';
+    public messagesLoading = true;
     private _selectedConversation: Conversation = this.componentsService?.selectedChat;
     private lastInputTime = new Date().getTime();
     constructor(private hubService: HubService, private dialog: MatDialog, private activatedRoute: ActivatedRoute, private componentsService: ComponentsService){
@@ -67,6 +68,7 @@ export class ChatComponent implements OnInit{
         return await this.hubService.GetChatMessages(this.selectedConversation.id, 0)
                 .then(messagesList => {
                     this.messages = messagesList;
+                    this.messagesLoading = false;
                 });
     }
     private subscribeForTyping() {
