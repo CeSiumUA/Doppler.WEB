@@ -35,3 +35,7 @@
 .chat-sender-name{
     font-size: 12px;
 }
+
+.message-action-button{
+    margin-right: 70px;
+}

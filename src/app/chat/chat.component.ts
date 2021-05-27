@@ -21,6 +21,7 @@ export class ChatComponent implements OnInit{
     public conversationMembers: Contact[] = [];
     public newMessage: string = '';
     public messagesLoading = true;
+    public selectedChatMessage: string = '';
     private _selectedConversation: Conversation = this.componentsService?.selectedChat;
     private lastInputTime = new Date().getTime();
     constructor(private hubService: HubService, private dialog: MatDialog, private activatedRoute: ActivatedRoute, private componentsService: ComponentsService){
@@ -45,6 +46,19 @@ export class ChatComponent implements OnInit{
             style += color;
         }
         return style;
+    }
+    public isChatMessageSelected(messageId: string | undefined): boolean{
+        return messageId === this.selectedChatMessage;
+    }
+    public handleMessageBoxClick(messageId: string | undefined): void{
+        if(messageId){
+            if(this.selectedChatMessage === messageId){
+                this.selectedChatMessage = '';
+            }
+            else{
+                this.selectedChatMessage = messageId;
+            }
+        }
     }
     public async sendMessage(): Promise<void>{
         const conversationMessage: ConversationMessage = {
