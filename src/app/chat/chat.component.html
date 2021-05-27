@@ -9,11 +9,8 @@
         </mat-card>
     </div>
     <div class="chat-area">
-        <!-- <div *ngFor="let message of messages" class="message-box">
-            <p>{{message?.content?.text}}</p>
-        </div> -->
         <div *ngIf="!messagesLoading">
-            <mat-card *ngFor="let message of messages" class="message-box" (click)="handleMessageBoxClick(message?.id)">
+            <!-- <mat-card *ngFor="let message of messages" class="message-box" (click)="handleMessageBoxClick(message?.id)">
                 <mat-card-header>
                     <img class="profile-image" mat-card-avatar [src]="getIconUrl(message.sender?.user?.iconUrl) | secure | async" (click)="showProfile()"/>
                     <mat-card-title class="chat-sender-name" [style]="getUserNameColor(message)">{{message.sender?.displayName}}</mat-card-title>
@@ -49,7 +46,14 @@
                         </tr>
                     </table>
                 </mat-card-actions>
-            </mat-card>
+            </mat-card> -->
+            <mat-list>
+                <mat-list-item *ngFor="let message of messages">
+                    <img class="profile-image" matListAvatar [src]="getIconUrl(message.sender?.user?.iconUrl) | secure | async" (click)="showProfile()"/>
+                    <div mat-line [style]="getUserNameColor(message)">{{message.sender?.displayName}}</div>
+                    <div mat-line>{{message.content?.text}}</div>
+                </mat-list-item>
+            </mat-list>
         </div>
         <mat-spinner color="accent" *ngIf="messagesLoading"></mat-spinner>
     </div>
