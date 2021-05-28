@@ -103,8 +103,7 @@ export class ChatComponent implements OnInit, OnDestroy{
             this.typingMember = typerName;
             setInterval(() => {
                 this.typingMember = undefined;
-                console.log('cleared typer');
-            }, 3000);
+            }, 4000);
         });
     }
     public async handleInput(event: any): Promise<void>{
