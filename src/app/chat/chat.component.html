@@ -2,7 +2,7 @@
     <div>
         <mat-card>
             <mat-card-header>
-                <img mat-card-avatar [src]="profileImageUrl | secure | async">
+                <img mat-card-avatar [src]="profileImageUrl">
                 <mat-card-title>{{selectedConversation?.name}}</mat-card-title>
                 <mat-card-subtitle>{{subTitle}}</mat-card-subtitle>
             </mat-card-header>
@@ -12,7 +12,7 @@
         <div *ngIf="!messagesLoading">
             <mat-list>
                 <mat-list-item *ngFor="let message of messages">
-                    <img class="profile-image" matListAvatar [src]="getIconUrl(message.sender?.user?.iconUrl) | secure | async" (click)="showProfile()"/>
+                    <img class="profile-image" matListAvatar [src]="getIconUrl(message.sender?.user?.iconUrl)" (click)="showProfile()"/>
                     <div mat-line [style]="getUserNameColor(message)">{{message.sender?.displayName}}</div>
                     <div mat-line>{{message.content?.text}}</div>
                 </mat-list-item>

@@ -4,11 +4,11 @@
     </div>
     <div *ngIf="!loading">
         <mat-card-header>
-            <img mat-card-avatar [src]="urlImage | secure | async" class="card-header-image"/>
+            <img mat-card-avatar [src]="urlImage" class="card-header-image"/>
             <mat-card-title>{{name}}</mat-card-title>
             <mat-card-subtitle>{{phoneNumber}}</mat-card-subtitle>
             </mat-card-header>
-            <img mat-card-image class="user-photo" (click)="scaleImage()" [attr.src]="image | secure | async" alt="Photo of a User">
+            <img mat-card-image class="user-photo" (click)="scaleImage()" [attr.src]="image" alt="Photo of a User">
             <mat-card-content>
             <p>
                 {{description}}
@@ -47,6 +47,6 @@
         <button class="shadow-button right-shadow-button" (click)="showPreviousImage()">></button>
     </div>
     <div class="overlay-photo-container" (click)="hideImage()">
-        <img class="overlay-photo" [attr.src]="ActiveOverlayPhoto | secure | async" alt="Photo of a User">
+        <img class="overlay-photo" [attr.src]="ActiveOverlayPhoto" alt="Photo of a User">
     </div>
   </div>

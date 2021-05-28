@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HubService } from '../services/communication/hub.service';
 import { ConversationMessage, ConversationMember } from '../../models/Message';
@@ -17,17 +17,21 @@ import { throwToolbarMixedModesError } from '@angular/material/toolbar';
     templateUrl: './chat.component.html',
     styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit{
+export class ChatComponent implements OnInit, OnDestroy{
     public messages: ConversationMessage[] = [];
     public conversationMembers: ConversationMember[] = [];
     public newMessage: string = '';
     public messagesLoading = true;
     public selectedChatMessage: string = '';
     public typingMember: string | undefined = undefined;
+    private typingSubscriptionMethod: string = 'HandleChatTyping';
     private _selectedConversation: Conversation = this.componentsService?.selectedChat;
     private lastInputTime = new Date().getTime();
     constructor(private hubService: HubService, private dialog: MatDialog, private activatedRoute: ActivatedRoute, private componentsService: ComponentsService){
         
+    }
+    ngOnDestroy(): void {
+        this.hubService.UnsubscribeFromMethod(this.typingSubscriptionMethod);
     }
     public get profileImageUrl(): string{
         return UrlResolver.GetImageUrl(this.selectedConversation?.iconUrl, DefaultImageType.ProfilePictire);
@@ -94,7 +98,7 @@ export class ChatComponent implements OnInit{
                 });
     }
     private async subscribeForTyping() {
-        await this.hubService.SubscribeToMethod('HandleChatTyping', (chatId: string, typer: string) => {
+        await this.hubService.SubscribeToMethod(this.typingSubscriptionMethod, (chatId: string, typer: string) => {
             const typerName = this.conversationMembers.filter(clnt => clnt.user.phoneNumber === typer)[0].displayName;
             this.typingMember = typerName;
             setInterval(() => {
