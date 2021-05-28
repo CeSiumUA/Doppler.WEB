@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HubService } from '../services/communication/hub.service';
-import { ConversationMessage } from '../../models/Message';
+import { ConversationMessage, ConversationMember } from '../../models/Message';
 import { ComponentsService } from '../services/utils/components.service';
-import { Conversation } from '../../models/Conversation';
+import { Conversation, Dialogue } from '../../models/Conversation';
 import { UrlResolver } from '../../environments/UrlResolver';
 import { DefaultImageType } from 'src/environments/enums.helper';
 import { Contact } from '../../models/contact';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileModalBoxComponent } from '../profile/profile_modal_box/profileModalBox.component';
 import { ProfileCardType } from '../services/authentication/User';
+import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 
 @Component({
     selector: 'app-chat',
@@ -18,10 +19,11 @@ import { ProfileCardType } from '../services/authentication/User';
 })
 export class ChatComponent implements OnInit{
     public messages: ConversationMessage[] = [];
-    public conversationMembers: Contact[] = [];
+    public conversationMembers: ConversationMember[] = [];
     public newMessage: string = '';
     public messagesLoading = true;
     public selectedChatMessage: string = '';
+    public typingMember: string | undefined = undefined;
     private _selectedConversation: Conversation = this.componentsService?.selectedChat;
     private lastInputTime = new Date().getTime();
     constructor(private hubService: HubService, private dialog: MatDialog, private activatedRoute: ActivatedRoute, private componentsService: ComponentsService){
@@ -38,6 +40,12 @@ export class ChatComponent implements OnInit{
     }
     public getIconUrl(imageGuid: string | undefined): string{
         return UrlResolver.GetImageUrl(imageGuid, DefaultImageType.ProfilePictire);
+    }
+    public get subTitle(): string{
+        if(this.typingMember) {
+            return `${this.typingMember} is typing...`;
+        }
+        return this.lastSeen;
     }
     public getUserNameColor(message: ConversationMessage): string{
         let style = 'color: ';
@@ -78,16 +86,21 @@ export class ChatComponent implements OnInit{
         }
     }
     private async loadMessages(): Promise<void>{
-        this.subscribeForTyping();
+        await this.subscribeForTyping();
         return await this.hubService.GetChatMessages(this.selectedConversation.id, 0)
                 .then(messagesList => {
                     this.messages = messagesList;
                     this.messagesLoading = false;
                 });
     }
-    private subscribeForTyping() {
-        this.hubService.SubscribeToMethod('HandleChatTyping', (chatId: string, typerNumber: string) => {
-
+    private async subscribeForTyping() {
+        await this.hubService.SubscribeToMethod('HandleChatTyping', (chatId: string, typer: string) => {
+            const typerName = this.conversationMembers.filter(clnt => clnt.user.phoneNumber === typer)[0].displayName;
+            this.typingMember = typerName;
+            setInterval(() => {
+                this.typingMember = undefined;
+                console.log('cleared typer');
+            }, 3000);
         });
     }
     public async handleInput(event: any): Promise<void>{
@@ -116,6 +129,11 @@ export class ChatComponent implements OnInit{
             const conversationId = this.activatedRoute.snapshot.params.id;
             await this.hubService.GetUserConversation(conversationId).then(async result => {
                 this._selectedConversation = result;
+                const dialogue = result as Dialogue;
+                if(dialogue.firstUser && dialogue.secondUser){
+                    this.conversationMembers.push(dialogue.firstUser);
+                    this.conversationMembers.push(dialogue.secondUser);
+                }
                 return await this.loadMessages();
             });
         }else{
