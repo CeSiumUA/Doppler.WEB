@@ -49,6 +49,9 @@ export class AuthenticationService {
     private getAuthModel(): AuthModel | null{
         return this.staticRepository.getLoginData();
     }
+    public get user(): User | undefined{
+        return this.getAuthModel()?.user;
+    }
     public get userName(): string | undefined {
         return this.getAuthModel()?.user.name;
     }

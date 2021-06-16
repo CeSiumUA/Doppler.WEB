@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProfileModalBoxComponent } from '../profile/profile_modal_box/profileModalBox.component';
 import { ProfileCardType } from '../services/authentication/User';
 import { throwToolbarMixedModesError } from '@angular/material/toolbar';
+import { AuthenticationService } from '../services/authentication/authentication.service';
 
 @Component({
     selector: 'app-chat',
@@ -27,7 +28,7 @@ export class ChatComponent implements OnInit, OnDestroy{
     private typingSubscriptionMethod: string = 'HandleChatTyping';
     private _selectedConversation: Conversation = this.componentsService?.selectedChat;
     private lastInputTime = new Date().getTime();
-    constructor(private hubService: HubService, private dialog: MatDialog, private activatedRoute: ActivatedRoute, private componentsService: ComponentsService){
+    constructor(private hubService: HubService, private dialog: MatDialog, private activatedRoute: ActivatedRoute, private componentsService: ComponentsService, private authService: AuthenticationService){
         
     }
     ngOnDestroy(): void {
@@ -46,7 +47,7 @@ export class ChatComponent implements OnInit, OnDestroy{
         return UrlResolver.GetImageUrl(imageGuid, DefaultImageType.ProfilePictire);
     }
     public get subTitle(): string{
-        if(this.typingMember) {
+        if (this.typingMember) {
             return `${this.typingMember} is typing...`;
         }
         return this.lastSeen;
@@ -63,8 +64,8 @@ export class ChatComponent implements OnInit, OnDestroy{
         return messageId === this.selectedChatMessage;
     }
     public handleMessageBoxClick(messageId: string | undefined): void{
-        if(messageId){
-            if(this.selectedChatMessage === messageId){
+        if (messageId){
+            if (this.selectedChatMessage === messageId){
                 this.selectedChatMessage = '';
             }
             else{
@@ -78,13 +79,16 @@ export class ChatComponent implements OnInit, OnDestroy{
             deleted: false,
             content: {
                 text: this.newMessage,
-                mediaContents: undefined
+                mediaContents: []
             }
         }
         if (this.selectedConversation.id){
             await this.hubService.WriteMessageToChat(this.selectedConversation.id, conversationMessage)
                 .then(result => {
-
+                    if (result.delivered){
+                        conversationMessage.sender = this.conversationMembers.filter(usr => usr.userId === this.authService.user?.id)[0];
+                        this.messages.push(conversationMessage);
+                    }
                 });
             this.newMessage = '';
         }
@@ -128,19 +132,16 @@ export class ChatComponent implements OnInit, OnDestroy{
         
     }
     async ngOnInit(): Promise<void>{
-        if (!this.selectedConversation){
-            const conversationId = this.activatedRoute.snapshot.params.id;
-            await this.hubService.GetUserConversation(conversationId).then(async result => {
-                this._selectedConversation = result;
-                const dialogue = result as Dialogue;
-                if(dialogue.firstUser && dialogue.secondUser){
-                    this.conversationMembers.push(dialogue.firstUser);
-                    this.conversationMembers.push(dialogue.secondUser);
-                }
-                return await this.loadMessages();
-            });
-        }else{
+        const conversationId = this.activatedRoute.snapshot.params.id;
+        await this.hubService.GetUserConversation(conversationId).then(async result => {
+            this._selectedConversation = result;
+            const dialogue = result as Dialogue;
+            if (dialogue.firstUser && dialogue.secondUser){
+                this.conversationMembers = [];
+                this.conversationMembers.push(dialogue.firstUser);
+                this.conversationMembers.push(dialogue.secondUser);
+            }
             return await this.loadMessages();
-        }
+        });
     }
 }
