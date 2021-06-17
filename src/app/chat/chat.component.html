@@ -10,13 +10,33 @@
     </div>
     <div class="chat-area">
         <div *ngIf="!messagesLoading">
-            <mat-list>
-                <mat-list-item *ngFor="let message of messages">
+            <mat-selection-list #messagesList [multiple]="false">
+                <mat-list-option *ngFor="let message of messages" [matMenuTriggerFor]="messageMenu">
                     <img class="profile-image" matListAvatar [src]="getIconUrl(message.sender?.user?.iconUrl)" (click)="showProfile()"/>
                     <div mat-line [style]="getUserNameColor(message)">{{message.sender?.displayName}}</div>
                     <div mat-line>{{message.content?.text}}</div>
-                </mat-list-item>
-            </mat-list>
+                </mat-list-option>
+                <mat-menu #messageMenu="matMenu" xPosition="after">
+                    <button style="color: red;" mat-menu-item>
+                        <mat-icon style="color: red;">
+                            delete
+                        </mat-icon>
+                        Delete
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon>
+                            forward
+                        </mat-icon>
+                        Forward
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon>
+                            reply
+                        </mat-icon>
+                        Reply
+                    </button>
+                </mat-menu>
+            </mat-selection-list>
         </div>
         <mat-spinner color="accent" *ngIf="messagesLoading"></mat-spinner>
     </div>
