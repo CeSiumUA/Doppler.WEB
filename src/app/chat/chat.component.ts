@@ -123,7 +123,7 @@ export class ChatComponent implements OnInit, OnDestroy{
         this.dialog.open(ProfileModalBoxComponent, {
             data: {
                 //FIXME
-                //profileId: this.authService.loginName,
+                profileId: this.authService.loginName,
                 profileCardType: ProfileCardType.UserProfile,
             },
         });
